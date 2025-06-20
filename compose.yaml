@@ -1,0 +1,7 @@
+﻿services:
+  zerotoheroapi:
+    image: zerotoheroapi
+    build:
+      context: .
+      dockerfile: Dockerfile
+

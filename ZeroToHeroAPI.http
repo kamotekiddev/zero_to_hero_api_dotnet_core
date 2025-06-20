@@ -1,0 +1,23 @@
+@BASE_URL = http://localhost:5068
+
+POST {{BASE_URL}}/login
+Accept: application/json
+Content-Type: application/json
+
+{
+  "email": "kamotekid@gmail.com",
+  "password": "FEdev#090122"
+}
+###
+
+POST {{BASE_URL}}/register
+Accept: application/json
+Content-Type: application/json
+
+{
+  "email": "kamotekid@gmail.com",
+  "password": "FEdev#090122"
+}
+###
+
+
