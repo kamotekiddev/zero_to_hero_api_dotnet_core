@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ZeroToHeroAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -157,6 +157,28 @@ namespace ZeroToHeroAPI.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "PlayerStats",
+                columns: table => new
+                {
+                    id = table.Column<string>(type: "text", nullable: false),
+                    current_level = table.Column<int>(type: "integer", nullable: false),
+                    max_level = table.Column<int>(type: "integer", nullable: false),
+                    current_exp = table.Column<int>(type: "integer", nullable: false),
+                    next_level_exp = table.Column<int>(type: "integer", nullable: false),
+                    user_id = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PlayerStats", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_PlayerStats_AspNetUsers_user_id",
+                        column: x => x.user_id,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -193,6 +215,12 @@ namespace ZeroToHeroAPI.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlayerStats_user_id",
+                table: "PlayerStats",
+                column: "user_id",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -212,6 +240,9 @@ namespace ZeroToHeroAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "PlayerStats");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
