@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ZeroToHeroAPI.Data;
-using ZeroToHeroAPI.Data.Dtos;
 using ZeroToHeroAPI.Interface;
+using ZeroToHeroAPI.Models.Dtos;
 
 namespace ZeroToHeroAPI.Services;
 
@@ -17,7 +17,7 @@ public class PlayerStatService : IPlayerStatService
         _userManager = userManager;
     }
 
-    public async Task<InitializePlayerStatDto> InitializePlayerStatAsync(string userId)
+    public async Task<PlayerStatDto> InitializePlayerStatAsync(string userId)
     {
         var user = await _userManager.FindByIdAsync(userId);
         if (user == null) throw new InvalidOperationException("User not found");
@@ -33,7 +33,7 @@ public class PlayerStatService : IPlayerStatService
         await _context.PlayerStats.AddAsync(newPlayerStat);
         await _context.SaveChangesAsync();
 
-        return new InitializePlayerStatDto()
+        return new PlayerStatDto()
         {
             Id = newPlayerStat.Id,
             CurrentLevel = newPlayerStat.CurrentLevel,
@@ -43,4 +43,52 @@ public class PlayerStatService : IPlayerStatService
             UserId = newPlayerStat.UserId
         };
     }
+
+    public async Task<(PlayerStatDto playerStat, List<PlayerAction> actions)> UpdatePlayerStatAsync(string playerStatId,
+        UpdatePlayerStatsDto updatePlayerStatsDto)
+    {
+        var actionsPerformed = new List<PlayerAction>();
+        var playerStat = await _context.PlayerStats.FindAsync(playerStatId);
+        if (playerStat == null) throw new InvalidOperationException("Player not found");
+
+        playerStat.CurrentExp += updatePlayerStatsDto.ExpGained;
+
+        if (updatePlayerStatsDto.ExpGained > 0)
+            actionsPerformed.Add(PlayerAction.ExpGained);
+        else if (updatePlayerStatsDto.ExpGained < 0)
+            actionsPerformed.Add(PlayerAction.ExpDecreased);
+
+        // Level Up
+        while (playerStat.CurrentExp >= GetNextLevelExp(playerStat.CurrentLevel))
+        {
+            playerStat.CurrentExp -= GetNextLevelExp(playerStat.CurrentLevel);
+            playerStat.CurrentLevel++;
+            actionsPerformed.Add(PlayerAction.LeveledUp);
+        }
+
+        // Level Down
+        while (playerStat.CurrentExp < 0 && playerStat.CurrentLevel > 1)
+        {
+            playerStat.CurrentLevel--;
+            playerStat.CurrentExp += GetNextLevelExp(playerStat.CurrentLevel);
+            actionsPerformed.Add(PlayerAction.LeveledDown);
+        }
+
+        playerStat.NextLevelExp = GetNextLevelExp(playerStat.CurrentLevel);
+
+        await _context.SaveChangesAsync();
+
+        var responseDto = new PlayerStatDto
+        {
+            Id = playerStat.Id,
+            UserId = playerStat.UserId,
+            CurrentExp = playerStat.CurrentExp,
+            CurrentLevel = playerStat.CurrentLevel,
+            NextLevelExp = playerStat.NextLevelExp,
+        };
+
+        return (responseDto, actionsPerformed);
+    }
+
+    int GetNextLevelExp(int level) => 50 * level * level;
 }

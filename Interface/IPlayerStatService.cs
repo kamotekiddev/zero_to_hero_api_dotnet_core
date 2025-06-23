@@ -1,10 +1,21 @@
-using ZeroToHeroAPI.Data;
-using ZeroToHeroAPI.Data.Dtos;
+using System.ComponentModel;
+using ZeroToHeroAPI.Models.Dtos;
 
 namespace ZeroToHeroAPI.Interface;
 
+public enum PlayerAction
+{
+    ExpGained,
+    ExpDecreased,
+    LeveledUp,
+    LeveledDown,
+}
+
 public interface IPlayerStatService
 {
-    Task<InitializePlayerStatDto> InitializePlayerStatAsync(
+    Task<PlayerStatDto> InitializePlayerStatAsync(
         string userId);
+
+    Task<(PlayerStatDto playerStat, List<PlayerAction> actions)>
+        UpdatePlayerStatAsync(string playerStatId, UpdatePlayerStatsDto updatePlayerStatsDto);
 }

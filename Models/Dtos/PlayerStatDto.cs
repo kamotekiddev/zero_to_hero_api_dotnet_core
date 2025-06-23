@@ -1,8 +1,6 @@
-using Microsoft.Build.Framework;
+namespace ZeroToHeroAPI.Models.Dtos;
 
-namespace ZeroToHeroAPI.Data.Dtos;
-
-public class InitializePlayerStatDto
+public class PlayerStatDto
 {
     public string Id { get; set; }
     public int CurrentLevel { get; set; } = 1;
