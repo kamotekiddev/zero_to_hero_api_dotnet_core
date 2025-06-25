@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using ZeroToHeroAPI.Data;
+using ZeroToHeroAPI.Exeptions;
 using ZeroToHeroAPI.Filters;
 using ZeroToHeroAPI.Interface;
-using ZeroToHeroAPI.Middleware;
 using ZeroToHeroAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +17,7 @@ builder.Services.AddIdentityApiEndpoints<User>()
 builder.Services.AddControllers();
 builder.Services.AddScoped<ValidateDtoFilter>();
 builder.Services.AddScoped<IPlayerStatService, PlayerStatService>();
+builder.Services.AddScoped<IQuestService, QuestService>();
 
 builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();

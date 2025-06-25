@@ -1,12 +1,13 @@
+using ZeroToHeroAPI.Models.Dtos;
 using ZeroToHeroAPI.Models.Quest;
 
 namespace ZeroToHeroAPI.Interface;
 
 public interface IQuestService
 {
-    Task CreateQuestTemplate(QuestTemplate questTemplate);
-    Task UpdateQuestTemplate(QuestTemplate questTemplate);
-    Task DeleteQuestTemplate(int id);
-    Task<List<QuestTemplate>> GetAllQuestTemplates();
-    Task<QuestTemplate> GetQuestTemplateById(int id);
+    Task<QuestTemplateDto> CreateQuestTemplateAsync(CreateQuestTemplateDto dto);
+    Task<QuestTemplateDto> UpdateQuestTemplateAsync(QuestTemplateDto questTemplateDto);
+    Task<QuestTemplateDto> DeleteQuestTemplateAsync(string id);
+    Task<List<QuestTemplateDto>> GetAllQuestTemplatesAsync();
+    Task<QuestTemplateDto> GetQuestTemplateByIdAsync(string id);
 }

@@ -1,10 +1,16 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace ZeroToHeroAPI.Models.Quest;
 
 public class QuestActionProgress
 {
-    public int Id { get; set; }
-    public int UserDailyQuestId { get; set; }
-    public int QuestActionId { get; set; }
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public string Id { get; set; }
+
+    public string DailyQuestId { get; set; }
+    public string QuestActionId { get; set; }
     public int ProgressValue { get; set; } = 0;
     public bool IsActionCompleted { get; set; } = false;
 

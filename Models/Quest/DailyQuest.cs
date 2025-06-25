@@ -1,10 +1,16 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace ZeroToHeroAPI.Models.Quest;
 
 public class DailyQuest
 {
-    public int Id { get; set; }
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public string Id { get; set; }
+
     public string UserId { get; set; } = string.Empty;
-    public int QuestTemplateId { get; set; }
+    public string QuestTemplateId { get; set; }
     public DateTime DateAssigned { get; set; }
     public bool IsCompleted { get; set; } = false;
     public DateTime? DateCompleted { get; set; }
