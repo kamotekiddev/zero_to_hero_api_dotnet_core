@@ -1,0 +1,13 @@
+namespace ZeroToHeroAPI.Models.Quest;
+
+public class QuestTemplate
+{
+    public int Id { get; set; }
+    public string Title { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
+    public int Difficulty { get; set; }
+    public bool IsActive { get; set; } = true;
+
+    public List<QuestAction> Actions { get; set; } = new();
+    public List<QuestReward> Rewards { get; set; } = new();
+}
