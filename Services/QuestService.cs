@@ -36,9 +36,29 @@ public class QuestService : IQuestService
         };
     }
 
-    public Task<QuestTemplateDto> UpdateQuestTemplateAsync(QuestTemplateDto questTemplateDto)
+    public async Task<QuestTemplateDto> UpdateQuestTemplateAsync(string id, UpdateQuestTemplateDto dto)
     {
-        throw new NotImplementedException();
+        var existingQuest = await _context.QuestTemplates.FindAsync(id);
+        if (existingQuest == null) throw new InvalidOperationException("Quest does not exist.");
+
+        var entity = new QuestTemplate()
+        {
+            Id = id,
+            Title = dto.Title,
+            Description = dto.Description,
+            Difficulty = dto.Difficulty
+        };
+
+        _context.QuestTemplates.Update(entity);
+        await _context.SaveChangesAsync();
+
+        return new QuestTemplateDto()
+        {
+            Id = entity.Id,
+            Title = entity.Title,
+            Description = entity.Description,
+            Difficulty = entity.Difficulty
+        };
     }
 
     public Task<QuestTemplateDto> DeleteQuestTemplateAsync(string id)

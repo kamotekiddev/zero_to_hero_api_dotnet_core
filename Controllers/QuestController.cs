@@ -25,10 +25,19 @@ namespace ZeroToHeroAPI.Controllers
 
         [HttpPost]
         [ServiceFilter(typeof(ValidateDtoFilter))]
-        public async Task<ActionResult> CreateQuestTemplate([FromBody] CreateQuestTemplateDto questTemplateDto)
+        public async Task<ActionResult> CreateQuestTemplate([FromBody] CreateQuestTemplateDto dto)
         {
-            var questTemplates = await _questService.CreateQuestTemplateAsync(questTemplateDto);
-            return Created(nameof(CreateQuestTemplate), new { message = "success", data = questTemplates });
+            var entity = await _questService.CreateQuestTemplateAsync(dto);
+            return Created(nameof(CreateQuestTemplate), new { message = "success", data = entity });
+        }
+
+        [HttpPut("{questTemplateId}")]
+        [ServiceFilter(typeof(ValidateDtoFilter))]
+        public async Task<ActionResult> UpdateQuestTemplate([FromRoute] string questTemplateId,
+            [FromBody] UpdateQuestTemplateDto dto)
+        {
+            var entity = await _questService.UpdateQuestTemplateAsync(questTemplateId, dto);
+            return Created(nameof(UpdateQuestTemplate), new { message = "success", data = entity });
         }
     }
 }
