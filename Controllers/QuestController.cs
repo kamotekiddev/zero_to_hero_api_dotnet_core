@@ -37,7 +37,14 @@ namespace ZeroToHeroAPI.Controllers
             [FromBody] UpdateQuestTemplateDto dto)
         {
             var entity = await _questService.UpdateQuestTemplateAsync(questTemplateId, dto);
-            return Created(nameof(UpdateQuestTemplate), new { message = "success", data = entity });
+            return Ok(new { message = "success", data = entity });
+        }
+
+        [HttpDelete("{questTemplateId}")]
+        public async Task<ActionResult> DeleteQuestTemplate([FromRoute] string questTemplateId)
+        {
+            var entity = await _questService.DeleteQuestTemplateAsync(questTemplateId);
+            return Ok(new { message = "Success", data = entity });
         }
     }
 }

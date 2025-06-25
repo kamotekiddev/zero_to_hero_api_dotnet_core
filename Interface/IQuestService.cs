@@ -1,5 +1,4 @@
 using ZeroToHeroAPI.Models.Dtos;
-using ZeroToHeroAPI.Models.Quest;
 
 namespace ZeroToHeroAPI.Interface;
 

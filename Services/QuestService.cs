@@ -39,7 +39,7 @@ public class QuestService : IQuestService
     public async Task<QuestTemplateDto> UpdateQuestTemplateAsync(string id, UpdateQuestTemplateDto dto)
     {
         var existingQuest = await _context.QuestTemplates.FindAsync(id);
-        if (existingQuest == null) throw new InvalidOperationException("Quest does not exist.");
+        if (existingQuest == null) throw new KeyNotFoundException("Quest does not exist.");
 
         var entity = new QuestTemplate()
         {
@@ -61,9 +61,21 @@ public class QuestService : IQuestService
         };
     }
 
-    public Task<QuestTemplateDto> DeleteQuestTemplateAsync(string id)
+    public async Task<QuestTemplateDto> DeleteQuestTemplateAsync(string id)
     {
-        throw new NotImplementedException();
+        var existingQuestTemplate = await _context.QuestTemplates.FindAsync(id);
+        if (existingQuestTemplate == null) throw new KeyNotFoundException("Quest template does not exist.");
+
+        _context.Remove(existingQuestTemplate);
+        await _context.SaveChangesAsync();
+
+        return new QuestTemplateDto()
+        {
+            Id = existingQuestTemplate.Id,
+            Title = existingQuestTemplate.Title,
+            Description = existingQuestTemplate.Description,
+            Difficulty = existingQuestTemplate.Difficulty
+        };
     }
 
     public async Task<List<QuestTemplateDto>> GetAllQuestTemplatesAsync()
@@ -79,8 +91,17 @@ public class QuestService : IQuestService
         }).ToList();
     }
 
-    public Task<QuestTemplateDto> GetQuestTemplateByIdAsync(string id)
+    public async Task<QuestTemplateDto> GetQuestTemplateByIdAsync(string id)
     {
-        throw new NotImplementedException();
+        var quest = await _context.QuestTemplates.FindAsync(id);
+        if (quest == null) throw new KeyNotFoundException("Quest not found");
+
+        return new QuestTemplateDto()
+        {
+            Id = quest.Id,
+            Title = quest.Title,
+            Description = quest.Description,
+            Difficulty = quest.Difficulty
+        };
     }
 }
