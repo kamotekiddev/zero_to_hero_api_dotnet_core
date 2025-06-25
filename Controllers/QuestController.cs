@@ -23,6 +23,13 @@ namespace ZeroToHeroAPI.Controllers
             return Ok(new { message = "Success", data = quests });
         }
 
+        [HttpGet("{questTemplateId}")]
+        public async Task<ActionResult> GetById([FromRoute] string questTemplateId)
+        {
+            var quest = await _questService.GetQuestTemplateByIdAsync(questTemplateId);
+            return Ok(new { message = "Success", data = quest });
+        }
+
         [HttpPost]
         [ServiceFilter(typeof(ValidateDtoFilter))]
         public async Task<ActionResult> CreateQuestTemplate([FromBody] CreateQuestTemplateDto dto)
