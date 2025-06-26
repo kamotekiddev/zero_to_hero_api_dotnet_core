@@ -14,8 +14,9 @@ builder.Services.AddIdentityApiEndpoints<User>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options => options.Filters.Add<ExceptionFilter>());
 builder.Services.AddScoped<ValidateDtoFilter>();
+builder.Services.AddScoped<ExceptionFilter>();
 builder.Services.AddScoped<IPlayerStatService, PlayerStatService>();
 builder.Services.AddScoped<IQuestService, QuestService>();
 builder.Services.AddScoped<IQuestActionService, QuestActionService>();
@@ -27,7 +28,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
-app.UseMiddleware<GlobaleExceptionsHandler>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
