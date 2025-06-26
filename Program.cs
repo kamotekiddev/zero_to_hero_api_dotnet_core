@@ -1,4 +1,3 @@
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using ZeroToHeroAPI.Data;
 using ZeroToHeroAPI.Exeptions;
@@ -6,17 +5,13 @@ using ZeroToHeroAPI.Filters;
 using ZeroToHeroAPI.Interface;
 using ZeroToHeroAPI.Services;
 
-
 var builder = WebApplication.CreateBuilder(args);
-
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
 
 builder.Services.AddIdentityApiEndpoints<User>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
-
-builder.Services.AddAutoMapper(typeof(Program));
 
 
 builder.Services.AddControllers();

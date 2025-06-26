@@ -1,4 +1,3 @@
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using ZeroToHeroAPI.Data;
 using ZeroToHeroAPI.Interface;
@@ -10,12 +9,10 @@ namespace ZeroToHeroAPI.Services;
 public class QuestService : IQuestService
 {
     private readonly ApplicationDbContext _context;
-    private readonly IMapper _mapper;
 
-    public QuestService(ApplicationDbContext context, IMapper mapper)
+    public QuestService(ApplicationDbContext context)
     {
         _context = context;
-        _mapper = mapper;
     }
 
     public async Task<QuestTemplateDto> CreateQuestTemplateAsync(CreateQuestTemplateDto dto)
@@ -30,7 +27,13 @@ public class QuestService : IQuestService
         _context.QuestTemplates.Add(entity);
         await _context.SaveChangesAsync();
 
-        return _mapper.Map<QuestTemplateDto>(entity);
+        return new QuestTemplateDto()
+        {
+            Id = entity.Id,
+            Title = entity.Title,
+            Description = entity.Description,
+            Difficulty = entity.Difficulty
+        };
     }
 
     public async Task<QuestTemplateDto> UpdateQuestTemplateAsync(string id, UpdateQuestTemplateDto dto)
@@ -49,7 +52,13 @@ public class QuestService : IQuestService
         _context.QuestTemplates.Update(entity);
         await _context.SaveChangesAsync();
 
-        return _mapper.Map<QuestTemplateDto>(entity);
+        return new QuestTemplateDto()
+        {
+            Id = entity.Id,
+            Title = entity.Title,
+            Description = entity.Description,
+            Difficulty = entity.Difficulty
+        };
     }
 
     public async Task<QuestTemplateDto> DeleteQuestTemplateAsync(string id)
@@ -60,13 +69,26 @@ public class QuestService : IQuestService
         _context.Remove(existingQuestTemplate);
         await _context.SaveChangesAsync();
 
-        return _mapper.Map<QuestTemplateDto>(existingQuestTemplate);
+        return new QuestTemplateDto()
+        {
+            Id = existingQuestTemplate.Id,
+            Title = existingQuestTemplate.Title,
+            Description = existingQuestTemplate.Description,
+            Difficulty = existingQuestTemplate.Difficulty
+        };
     }
 
     public async Task<List<QuestTemplateDto>> GetAllQuestTemplatesAsync()
     {
         var rawQuests = await _context.QuestTemplates.ToListAsync();
-        return _mapper.Map<List<QuestTemplateDto>>(rawQuests);
+
+        return rawQuests.Select(quest => new QuestTemplateDto()
+        {
+            Id = quest.Id,
+            Title = quest.Title,
+            Description = quest.Description,
+            Difficulty = quest.Difficulty
+        }).ToList();
     }
 
     public async Task<QuestTemplateDto> GetQuestTemplateByIdAsync(string id)
@@ -74,6 +96,12 @@ public class QuestService : IQuestService
         var quest = await _context.QuestTemplates.FindAsync(id);
         if (quest == null) throw new KeyNotFoundException("Quest not found");
 
-        return _mapper.Map<QuestTemplateDto>(quest);
+        return new QuestTemplateDto()
+        {
+            Id = quest.Id,
+            Title = quest.Title,
+            Description = quest.Description,
+            Difficulty = quest.Difficulty
+        };
     }
 }
