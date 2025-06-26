@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using ZeroToHeroAPI.Data;
+using ZeroToHeroAPI.Dtos;
 using ZeroToHeroAPI.Interface;
-using ZeroToHeroAPI.Models.Dtos;
 using ZeroToHeroAPI.Models.Quest;
 
 namespace ZeroToHeroAPI.Services;

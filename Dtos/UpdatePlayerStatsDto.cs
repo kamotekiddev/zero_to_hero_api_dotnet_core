@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ZeroToHeroAPI.Models.Dtos;
+namespace ZeroToHeroAPI.Dtos;
 
 public class UpdatePlayerStatsDto
 {

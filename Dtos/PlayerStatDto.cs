@@ -1,4 +1,4 @@
-namespace ZeroToHeroAPI.Models.Dtos;
+namespace ZeroToHeroAPI.Dtos;
 
 public class PlayerStatDto
 {

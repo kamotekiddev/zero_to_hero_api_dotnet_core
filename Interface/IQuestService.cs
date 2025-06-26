@@ -1,4 +1,4 @@
-using ZeroToHeroAPI.Models.Dtos;
+using ZeroToHeroAPI.Dtos;
 
 namespace ZeroToHeroAPI.Interface;
 

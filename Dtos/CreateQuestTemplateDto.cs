@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using ZeroToHeroAPI.Enums;
 
-namespace ZeroToHeroAPI.Models.Dtos;
+namespace ZeroToHeroAPI.Dtos;
 
 public class CreateQuestTemplateDto
 {

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using ZeroToHeroAPI.Dtos;
 using ZeroToHeroAPI.Filters;
 using ZeroToHeroAPI.Interface;
-using ZeroToHeroAPI.Models.Dtos;
 
 namespace ZeroToHeroAPI.Controllers
 {

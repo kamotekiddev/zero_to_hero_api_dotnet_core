@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ZeroToHeroAPI.Data;
+using ZeroToHeroAPI.Dtos;
 using ZeroToHeroAPI.Interface;
-using ZeroToHeroAPI.Models.Dtos;
 
 namespace ZeroToHeroAPI.Services;
 

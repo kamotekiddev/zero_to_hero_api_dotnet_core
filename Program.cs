@@ -18,6 +18,7 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<ValidateDtoFilter>();
 builder.Services.AddScoped<IPlayerStatService, PlayerStatService>();
 builder.Services.AddScoped<IQuestService, QuestService>();
+builder.Services.AddScoped<IQuestActionService, QuestActionService>();
 
 builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();
