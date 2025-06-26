@@ -16,4 +16,5 @@ public class QuestTemplate
 
     public List<QuestAction> Actions { get; set; } = new();
     public List<QuestReward> Rewards { get; set; } = new();
+    public List<QuestPunishment> Punishments { get; set; } = new();
 }

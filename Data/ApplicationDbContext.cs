@@ -17,6 +17,7 @@ public class ApplicationDbContext : IdentityDbContext<User>
     public DbSet<QuestReward> QuestRewards { get; set; }
     public DbSet<DailyQuest> DailyQuests { get; set; }
     public DbSet<QuestActionProgress> QuestActionProgresses { get; set; }
+    public DbSet<QuestPunishment> QuestPunishments { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -41,6 +42,10 @@ public class ApplicationDbContext : IdentityDbContext<User>
             .HasMany(q => q.Rewards)
             .WithOne(r => r.QuestTemplate)
             .HasForeignKey(r => r.QuestTemplateId);
+
+        builder.Entity<QuestTemplate>().HasMany(q => q.Punishments)
+            .WithOne(p => p.QuestTemplate)
+            .HasForeignKey(p => p.QuestTemplateId);
 
         builder.Entity<DailyQuest>()
             .HasMany(uq => uq.ActionProgresses)
