@@ -12,8 +12,7 @@ public class QuestReward
 
     public string QuestTemplateId { get; set; }
     public QuestRewardTypeEnum RewardType { get; set; }
-    public int MinValue { get; set; }
-    public int MaxValue { get; set; }
+    public int Value { get; set; }
 
     public QuestTemplate QuestTemplate { get; set; } = null!;
 }

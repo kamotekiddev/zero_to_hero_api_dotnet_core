@@ -21,8 +21,7 @@ public class QuestPunishmentService : IQuestPunishmentService
         {
             QuestTemplateId = dto.QuestTemplateId,
             PunishmentType = dto.PunishmentType,
-            MinValue = dto.MinValue,
-            MaxValue = dto.MaxValue
+            Value = dto.Value,
         };
 
         _context.QuestPunishments.Add(entity);
@@ -33,8 +32,7 @@ public class QuestPunishmentService : IQuestPunishmentService
             Id = entity.Id,
             QuestTemplateId = entity.QuestTemplateId,
             PunishmentTypeEnum = entity.PunishmentType,
-            MinValue = entity.MinValue,
-            MaxValue = entity.MaxValue
+            Value = dto.Value,
         };
     }
 
@@ -46,8 +44,7 @@ public class QuestPunishmentService : IQuestPunishmentService
 
         entity.QuestTemplateId = dto.QuestTemplateId;
         entity.PunishmentType = dto.PunishmentType;
-        entity.MinValue = dto.MinValue;
-        entity.MaxValue = dto.MaxValue;
+        entity.Value = dto.Value;
 
         _context.QuestPunishments.Update(entity);
         await _context.SaveChangesAsync();
@@ -57,8 +54,7 @@ public class QuestPunishmentService : IQuestPunishmentService
             Id = entity.Id,
             QuestTemplateId = entity.QuestTemplateId,
             PunishmentTypeEnum = entity.PunishmentType,
-            MinValue = entity.MinValue,
-            MaxValue = entity.MaxValue
+            Value = entity.Value,
         };
     }
 
@@ -75,8 +71,7 @@ public class QuestPunishmentService : IQuestPunishmentService
             Id = entity.Id,
             QuestTemplateId = entity.QuestTemplateId,
             PunishmentTypeEnum = entity.PunishmentType,
-            MinValue = entity.MinValue,
-            MaxValue = entity.MaxValue
+            Value = entity.Value,
         };
     }
 
@@ -84,13 +79,12 @@ public class QuestPunishmentService : IQuestPunishmentService
     {
         var questPunishments = await _context.QuestPunishments.ToListAsync();
 
-        return questPunishments.Select(questPunishment => new QuestPunishmentDto
+        return questPunishments.Select(q => new QuestPunishmentDto
         {
-            Id = questPunishment.Id,
-            QuestTemplateId = questPunishment.QuestTemplateId,
-            PunishmentTypeEnum = questPunishment.PunishmentType,
-            MinValue = questPunishment.MinValue,
-            MaxValue = questPunishment.MaxValue
+            Id = q.Id,
+            QuestTemplateId = q.QuestTemplateId,
+            PunishmentTypeEnum = q.PunishmentType,
+            Value = q.Value,
         }).ToList();
     }
 
@@ -104,8 +98,7 @@ public class QuestPunishmentService : IQuestPunishmentService
             Id = entity.Id,
             QuestTemplateId = entity.QuestTemplateId,
             PunishmentTypeEnum = entity.PunishmentType,
-            MinValue = entity.MinValue,
-            MaxValue = entity.MaxValue
+            Value = entity.Value,
         };
     }
 }

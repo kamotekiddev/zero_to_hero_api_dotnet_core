@@ -9,8 +9,7 @@ public class QuestRewardDto
     public string Id { get; set; }
     public string QuestTemplateId { get; set; }
     public QuestRewardTypeEnum RewardType { get; set; }
-    public int MinValue { get; set; }
-    public int MaxValue { get; set; }
+    public int Value { get; set; }
 }
 
 public class CreateQuestRewardDto
@@ -21,8 +20,7 @@ public class CreateQuestRewardDto
     [ValidEnum(typeof(QuestRewardTypeEnum))]
     public QuestRewardTypeEnum RewardType { get; set; }
 
-    [Required] [Range(1, int.MaxValue)] public int MinValue { get; set; }
-    [Required] [Range(1, int.MaxValue)] public int MaxValue { get; set; }
+    [Required] [Range(1, int.MaxValue)] public int Value { get; set; }
 }
 
 public class UpdateQuestRewardDto
@@ -33,6 +31,5 @@ public class UpdateQuestRewardDto
     [ValidEnum(typeof(QuestRewardTypeEnum))]
     public QuestRewardTypeEnum RewardType { get; set; }
 
-    [Required] [Range(1, int.MaxValue)] public int MinValue { get; set; }
-    [Required] [Range(1, int.MaxValue)] public int MaxValue { get; set; }
+    [Required] [Range(1, int.MaxValue)] public int Value { get; set; }
 }

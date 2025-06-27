@@ -21,8 +21,7 @@ public class QuestRewardService : IQuestRewardService
         {
             QuestTemplateId = dto.QuestTemplateId,
             RewardType = dto.RewardType,
-            MinValue = dto.MinValue,
-            MaxValue = dto.MaxValue
+            Value = dto.Value,
         };
 
         _context.QuestRewards.Add(entity);
@@ -33,7 +32,7 @@ public class QuestRewardService : IQuestRewardService
             Id = entity.Id,
             QuestTemplateId = entity.QuestTemplateId,
             RewardType = entity.RewardType,
-            MinValue = entity.MinValue, MaxValue = entity.MaxValue
+            Value = dto.Value,
         };
     }
 
@@ -44,8 +43,7 @@ public class QuestRewardService : IQuestRewardService
 
         entity.QuestTemplateId = dto.QuestTemplateId;
         entity.RewardType = dto.RewardType;
-        entity.MinValue = dto.MinValue;
-        entity.MaxValue = dto.MaxValue;
+        entity.Value = dto.Value;
 
         _context.QuestRewards.Update(entity);
         await _context.SaveChangesAsync();
@@ -55,7 +53,7 @@ public class QuestRewardService : IQuestRewardService
             Id = entity.Id,
             QuestTemplateId = entity.QuestTemplateId,
             RewardType = entity.RewardType,
-            MinValue = entity.MinValue, MaxValue = entity.MaxValue
+            Value = entity.Value,
         };
     }
 
@@ -72,19 +70,19 @@ public class QuestRewardService : IQuestRewardService
             Id = entity.Id,
             QuestTemplateId = entity.QuestTemplateId,
             RewardType = entity.RewardType,
-            MinValue = entity.MinValue, MaxValue = entity.MaxValue
+            Value = entity.Value,
         };
     }
 
     public async Task<List<QuestRewardDto>> GetAllQuestRewardsAsync()
     {
         var questRewards = await _context.QuestRewards.ToListAsync();
-        return questRewards.Select(questReward => new QuestRewardDto
+        return questRewards.Select(q => new QuestRewardDto
         {
-            Id = questReward.Id,
-            QuestTemplateId = questReward.QuestTemplateId,
-            RewardType = questReward.RewardType,
-            MinValue = questReward.MinValue, MaxValue = questReward.MaxValue
+            Id = q.Id,
+            QuestTemplateId = q.QuestTemplateId,
+            RewardType = q.RewardType,
+            Value = q.Value,
         }).ToList();
     }
 
@@ -98,7 +96,7 @@ public class QuestRewardService : IQuestRewardService
             Id = entity.Id,
             QuestTemplateId = entity.QuestTemplateId,
             RewardType = entity.RewardType,
-            MinValue = entity.MinValue, MaxValue = entity.MaxValue
+            Value = entity.Value
         };
     }
 }

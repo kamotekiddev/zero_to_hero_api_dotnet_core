@@ -9,8 +9,7 @@ public class QuestPunishmentDto
     public string Id { get; set; }
     public string QuestTemplateId { get; set; }
     public QuestPunishmentTypeEnum PunishmentTypeEnum { get; set; }
-    public int MinValue { get; set; }
-    public int MaxValue { get; set; }
+    public int Value { get; set; }
 }
 
 public class CreateQuestPunishmentDto
@@ -21,8 +20,7 @@ public class CreateQuestPunishmentDto
     [ValidEnum(typeof(QuestPunishmentTypeEnum))]
     public QuestPunishmentTypeEnum PunishmentType { get; set; }
 
-    [Required] [Range(1, int.MaxValue)] public int MinValue { get; set; }
-    [Required] [Range(1, int.MaxValue)] public int MaxValue { get; set; }
+    [Required] [Range(1, int.MaxValue)] public int Value { get; set; }
 }
 
 public class UpdateQuestPunishmentDto
@@ -33,6 +31,5 @@ public class UpdateQuestPunishmentDto
     [ValidEnum(typeof(QuestPunishmentTypeEnum))]
     public QuestPunishmentTypeEnum PunishmentType { get; set; }
 
-    [Required] [Range(1, int.MaxValue)] public int MinValue { get; set; }
-    [Required] [Range(1, int.MaxValue)] public int MaxValue { get; set; }
+    [Required] [Range(1, int.MaxValue)] public int Value { get; set; }
 }

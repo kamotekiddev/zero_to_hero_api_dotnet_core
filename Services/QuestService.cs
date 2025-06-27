@@ -93,15 +93,42 @@ public class QuestService : IQuestService
 
     public async Task<QuestTemplateDto> GetQuestTemplateByIdAsync(string id)
     {
-        var quest = await _context.QuestTemplates.FindAsync(id);
+        var quest = await _context.QuestTemplates
+            .Include(q => q.Actions)
+            .Include(q => q.Punishments)
+            .Include(q => q.Rewards)
+            .FirstOrDefaultAsync(q => q.Id == id);
+
         if (quest == null) throw new KeyNotFoundException("Quest not found");
 
-        return new QuestTemplateDto()
+        return new QuestTemplateDto
         {
             Id = quest.Id,
             Title = quest.Title,
             Description = quest.Description,
-            Difficulty = quest.Difficulty
+            Difficulty = quest.Difficulty,
+            Rewards = quest.Rewards.Select(r => new QuestRewardDto
+            {
+                Id = r.Id,
+                QuestTemplateId = r.QuestTemplateId,
+                RewardType = r.RewardType,
+                Value = r.Value,
+            }),
+            Actions = quest.Actions.Select(a => new QuestActionDto
+            {
+                Id = a.Id,
+                QuestTemplateId = a.QuestTemplateId,
+                ActionType = a.ActionType,
+                TargetValue = a.TargetValue,
+                Unit = a.Unit
+            }),
+            Punishments = quest.Punishments.Select(p => new QuestPunishmentDto
+            {
+                Id = p.Id,
+                QuestTemplateId = p.QuestTemplateId,
+                Value = p.Value,
+                PunishmentTypeEnum = p.PunishmentType,
+            })
         };
     }
 }
