@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using ZeroToHeroAPI.Models.Quest;
+using ZeroToHeroAPI.Models;
 
 namespace ZeroToHeroAPI.Data;
 

@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ZeroToHeroAPI.Models.Quest;
+namespace ZeroToHeroAPI.Models;
 
 public class DailyQuest
 {

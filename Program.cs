@@ -1,8 +1,10 @@
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using ZeroToHeroAPI.Data;
 using ZeroToHeroAPI.Exeptions;
 using ZeroToHeroAPI.Filters;
 using ZeroToHeroAPI.Interface;
+using ZeroToHeroAPI.Models;
 using ZeroToHeroAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +17,8 @@ builder.Services.AddIdentityApiEndpoints<User>()
 
 
 builder.Services.AddControllers(options => options.Filters.Add<ExceptionFilter>());
+
+
 builder.Services.AddScoped<ValidateDtoFilter>();
 builder.Services.AddScoped<ExceptionFilter>();
 builder.Services.AddScoped<IPlayerStatService, PlayerStatService>();

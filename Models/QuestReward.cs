@@ -1,18 +1,19 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using ZeroToHeroAPI.Enums;
 
-namespace ZeroToHeroAPI.Models.Quest;
+namespace ZeroToHeroAPI.Models;
 
-public class QuestPunishment
+public class QuestReward
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public string Id { get; set; }
 
     public string QuestTemplateId { get; set; }
-    public string PunishmentType { get; set; } = string.Empty;
+    public QuestRewardTypeEnum RewardType { get; set; }
     public int MinValue { get; set; }
     public int MaxValue { get; set; }
 
-    public QuestTemplate QuestTemplate { get; set; } = null;
+    public QuestTemplate QuestTemplate { get; set; } = null!;
 }

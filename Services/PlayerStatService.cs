@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ZeroToHeroAPI.Data;
 using ZeroToHeroAPI.Dtos;
 using ZeroToHeroAPI.Interface;
+using ZeroToHeroAPI.Models;
 
 namespace ZeroToHeroAPI.Services;
 

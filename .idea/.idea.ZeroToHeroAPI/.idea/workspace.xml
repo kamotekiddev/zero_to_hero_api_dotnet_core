@@ -8,15 +8,46 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="18791431-ef93-460b-88b3-37cf183b1a1d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Dtos/QuestPunishmentDto.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Interface/IQuestPunishmentService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Models/Quest/QuestPunishment.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Services/QuestPunishmentService.cs" afterDir="false" />
+    <list default="true" id="18791431-ef93-460b-88b3-37cf183b1a1d" name="Changes" comment="feature: add validation and use enums for type actions">
+      <change afterPath="$PROJECT_DIR$/Attributes/ValidEnumAttribute.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Enums/QuestActionTypeEnum.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Enums/QuestActionUnitEnum.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Enums/QuestPunishmentTypeEnum.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Enums/QuestRewardTypeEnum.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ZeroToHeroAPI/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ZeroToHeroAPI/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/QuestPunishmentController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/QuestPunishmentController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Data/ApplicationDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/ApplicationDbContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Migrations/ApplicationDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Migrations/ApplicationDbContextModelSnapshot.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/Quest/QuestTemplate.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Quest/QuestTemplate.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dtos/CreateQuestTemplateDto.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dtos/PlayerStatDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Dtos/PlayerStatDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dtos/QuestActionDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Dtos/QuestActionDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dtos/QuestPunishmentDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Dtos/QuestPunishmentDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dtos/QuestRewardDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Dtos/QuestRewardDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dtos/QuestTemplateDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Dtos/QuestTemplateDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dtos/UpdatePlayerStatsDto.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dtos/UpdateQuestTemplateDto.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Enums/QuestDifficulty.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Enums/QuestDifficultyEnum.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Migrations/20250623081748_initial.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Migrations/20250623081748_initial.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Migrations/20250625100925_Quest Management.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Migrations/20250625100925_Quest Management.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Migrations/20250626132706_Add Quest Punishment.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Migrations/20250626132706_Add Quest Punishment.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Migrations/ApplicationDbContextModelSnapshot.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/PlayerStat.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/PlayerStat.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Quest/DailyQuest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DailyQuest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Quest/QuestAction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/QuestAction.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Quest/QuestActionProgress.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/QuestActionProgress.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Quest/QuestPunishment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/QuestPunishment.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Quest/QuestReward.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/QuestReward.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Quest/QuestTemplate.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/QuestTemplate.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/User.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/PlayerStatService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/PlayerStatService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/QuestActionService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/QuestActionService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/QuestPunishmentService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/QuestPunishmentService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/QuestRewardService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/QuestRewardService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/QuestService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/QuestService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZeroToHeroAPI.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/ZeroToHeroAPI.sln.DotSettings.user" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,14 +73,16 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock:///Users/kamote-kid/Documents/projects/zero-to-hero/ZeroToHeroAPI/Program.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/14d0d0de22ddbd27c52ef5dede3271652a286199ce326f3c6c38e5cce5acfd/HostEnvironmentEnvExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5b81f535cb12983d46d4027f0bb791ebb5ac31d4b47a166756a7461b76862c/CustomValidationAttribute.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5ffc6a1294886c0cdec34c30e9c2639f4b32afa27476801d53148b2ffd44/EnumDataTypeAttribute.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/9ee76fb4aded5e9da6e66cc2dcb127fac08d3ec5ac84fc6db9d4ee1d2e38/Monitor.CoreCLR.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bf9021a960b74107a7e141aa06bc9d8a0a53c929178c2fb95b1597be8af8dc/ExceptionDispatchInfo.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/c7afd9724cf757c4a8469dba2bdc22ab5ac111c91f431dbfefc992dacb3e8635/ControllerBase.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/e52a70dae11948fa5bfb33d03fd2e7d9b6ece182647aa4d9b1221413ac57dc7/IdentityUser.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/ec4d13a352d1683e4dc82fea6a1012a0351675b014479f42354f8724baa4f94/SignInManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/f0c16cda8a141e194c9151fd8f6acd0f93ef39e54a2a250baf2e5b2fa1fac6/WebApplication.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/f5379071e4f83fd6ca437fdb7b21f5d70eef8a11e147f8c0ca75523d742dd0/ValidationAttribute.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="KubernetesApiPersistence">{}</component>
   <component name="KubernetesApiProvider">{
@@ -69,34 +102,34 @@
     <option name="openDirectoriesWithSingleClick" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Launch Settings Profile.ZeroToHeroAPI: http.executor": "Run",
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Attach to Process.2865:JetBrains.Roslyn.Worker.executor": "Debug",
-    "HTTP Request.ZeroToHeroAPI | #1.executor": "Run",
-    "HTTP Request.ZeroToHeroAPI | #2.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "feature/quest",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "rider.code.cleanup.on.save": "true",
-    "rider.code.cleanup.on.save.profile": "Built-in: Reformat Code",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Launch Settings Profile.ZeroToHeroAPI: http.executor&quot;: &quot;Run&quot;,
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Attach to Process.2865:JetBrains.Roslyn.Worker.executor&quot;: &quot;Debug&quot;,
+    &quot;HTTP Request.ZeroToHeroAPI | #1.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.ZeroToHeroAPI | #2.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/quest&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;rider.code.cleanup.on.save&quot;: &quot;true&quot;,
+    &quot;rider.code.cleanup.on.save.profile&quot;: &quot;Built-in: Reformat Code&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.ZeroToHeroAPI: http">
     <configuration name="ZeroToHeroAPI | #1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/ZeroToHeroAPI.http" executionIdentifier="#1" runType="Run single request">
       <method v="2" />
@@ -204,7 +237,10 @@
       <workItem from="1750813274549" duration="16245000" />
       <workItem from="1750897492783" duration="9046000" />
       <workItem from="1750909204760" duration="41000" />
-      <workItem from="1750909255790" duration="6918000" />
+      <workItem from="1750909255790" duration="7116000" />
+      <workItem from="1750983182614" duration="613000" />
+      <workItem from="1750985517961" duration="8354000" />
+      <workItem from="1750998404077" duration="1443000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <option name="closed" value="true" />
@@ -334,7 +370,15 @@
       <option name="project" value="LOCAL" />
       <updated>1750942720224</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="feature: quest punishment crud operations">
+      <option name="closed" value="true" />
+      <created>1750944797667</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1750944797667</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -368,7 +412,8 @@
     <MESSAGE value="feature: quest action crud operations" />
     <MESSAGE value="feature: quest reward crud operations" />
     <MESSAGE value="feature: use exception filter instead of middleware" />
-    <option name="LAST_COMMIT_MESSAGE" value="feature: use exception filter instead of middleware" />
+    <MESSAGE value="feature: quest punishment crud operations" />
+    <option name="LAST_COMMIT_MESSAGE" value="feature: quest punishment crud operations" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -387,26 +432,26 @@
         </breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Services/PlayerStatService.cs</url>
-          <line>74</line>
+          <line>75</line>
           <properties documentPath="$PROJECT_DIR$/Services/PlayerStatService.cs" containingFunctionPresentation="Method 'UpdatePlayerStatAsync'">
             <startOffsets>
-              <option value="2789" />
+              <option value="2817" />
             </startOffsets>
             <endOffsets>
-              <option value="2790" />
+              <option value="2818" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Services/PlayerStatService.cs</url>
-          <line>61</line>
+          <line>62</line>
           <properties documentPath="$PROJECT_DIR$/Services/PlayerStatService.cs" containingFunctionPresentation="Method 'UpdatePlayerStatAsync'">
             <startOffsets>
-              <option value="2227" />
+              <option value="2255" />
             </startOffsets>
             <endOffsets>
-              <option value="2300" />
+              <option value="2328" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="11" />

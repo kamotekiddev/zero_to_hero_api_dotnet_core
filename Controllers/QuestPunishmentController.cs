@@ -39,6 +39,7 @@ namespace ZeroToHeroAPI.Controllers
         }
 
         [HttpPut("{questPunishmentId}")]
+        [ServiceFilter(typeof(ValidateDtoFilter))]
         public async Task<IActionResult> UpdateQuestPunishment(
             [FromRoute] string questPunishmentId, [FromBody] UpdateQuestPunishmentDto dto)
         {

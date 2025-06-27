@@ -1,7 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using ZeroToHeroAPI.Enums;
 
-namespace ZeroToHeroAPI.Models.Quest;
+namespace ZeroToHeroAPI.Models;
 
 public class QuestAction
 {
@@ -10,9 +11,9 @@ public class QuestAction
     public string Id { get; set; }
 
     public string QuestTemplateId { get; set; }
-    public string ActionType { get; set; } = string.Empty; // e.g. Walk, Pushup
+    public QuestActionTypeEnum ActionType { get; set; }
     public int TargetValue { get; set; }
-    public string Unit { get; set; } = string.Empty;
+    public QuestActionUnitEnum Unit { get; set; }
 
     public QuestTemplate QuestTemplate { get; set; } = null!;
 }

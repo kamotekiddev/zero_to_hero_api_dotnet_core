@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using ZeroToHeroAPI.Data;
 using ZeroToHeroAPI.Dtos;
 using ZeroToHeroAPI.Interface;
-using ZeroToHeroAPI.Models.Quest;
+using ZeroToHeroAPI.Models;
 
 namespace ZeroToHeroAPI.Services;
 
@@ -32,7 +32,7 @@ public class QuestPunishmentService : IQuestPunishmentService
         {
             Id = entity.Id,
             QuestTemplateId = entity.QuestTemplateId,
-            PunishmentType = entity.PunishmentType,
+            PunishmentTypeEnum = entity.PunishmentType,
             MinValue = entity.MinValue,
             MaxValue = entity.MaxValue
         };
@@ -56,7 +56,7 @@ public class QuestPunishmentService : IQuestPunishmentService
         {
             Id = entity.Id,
             QuestTemplateId = entity.QuestTemplateId,
-            PunishmentType = entity.PunishmentType,
+            PunishmentTypeEnum = entity.PunishmentType,
             MinValue = entity.MinValue,
             MaxValue = entity.MaxValue
         };
@@ -74,7 +74,7 @@ public class QuestPunishmentService : IQuestPunishmentService
         {
             Id = entity.Id,
             QuestTemplateId = entity.QuestTemplateId,
-            PunishmentType = entity.PunishmentType,
+            PunishmentTypeEnum = entity.PunishmentType,
             MinValue = entity.MinValue,
             MaxValue = entity.MaxValue
         };
@@ -88,7 +88,7 @@ public class QuestPunishmentService : IQuestPunishmentService
         {
             Id = questPunishment.Id,
             QuestTemplateId = questPunishment.QuestTemplateId,
-            PunishmentType = questPunishment.PunishmentType,
+            PunishmentTypeEnum = questPunishment.PunishmentType,
             MinValue = questPunishment.MinValue,
             MaxValue = questPunishment.MaxValue
         }).ToList();
@@ -103,7 +103,7 @@ public class QuestPunishmentService : IQuestPunishmentService
         {
             Id = entity.Id,
             QuestTemplateId = entity.QuestTemplateId,
-            PunishmentType = entity.PunishmentType,
+            PunishmentTypeEnum = entity.PunishmentType,
             MinValue = entity.MinValue,
             MaxValue = entity.MaxValue
         };

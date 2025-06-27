@@ -154,7 +154,37 @@ namespace ZeroToHeroAPI.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("ZeroToHeroAPI.Data.PlayerStat", b =>
+            modelBuilder.Entity("ZeroToHeroAPI.Models.DailyQuest", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("DateAssigned")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DateCompleted")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("QuestTemplateId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestTemplateId");
+
+                    b.ToTable("DailyQuests");
+                });
+
+            modelBuilder.Entity("ZeroToHeroAPI.Models.PlayerStat", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
@@ -190,7 +220,139 @@ namespace ZeroToHeroAPI.Migrations
                     b.ToTable("PlayerStats");
                 });
 
-            modelBuilder.Entity("ZeroToHeroAPI.Data.User", b =>
+            modelBuilder.Entity("ZeroToHeroAPI.Models.QuestAction", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("text");
+
+                    b.Property<int>("ActionType")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("QuestTemplateId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("TargetValue")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Unit")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestTemplateId");
+
+                    b.ToTable("QuestActions");
+                });
+
+            modelBuilder.Entity("ZeroToHeroAPI.Models.QuestActionProgress", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("text");
+
+                    b.Property<string>("DailyQuestId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsActionCompleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("ProgressValue")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("QuestActionId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DailyQuestId");
+
+                    b.HasIndex("QuestActionId");
+
+                    b.ToTable("QuestActionProgresses");
+                });
+
+            modelBuilder.Entity("ZeroToHeroAPI.Models.QuestPunishment", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("text");
+
+                    b.Property<int>("MaxValue")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("MinValue")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PunishmentType")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("QuestTemplateId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestTemplateId");
+
+                    b.ToTable("QuestPunishments");
+                });
+
+            modelBuilder.Entity("ZeroToHeroAPI.Models.QuestReward", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("text");
+
+                    b.Property<int>("MaxValue")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("MinValue")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("QuestTemplateId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("RewardType")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestTemplateId");
+
+                    b.ToTable("QuestRewards");
+                });
+
+            modelBuilder.Entity("ZeroToHeroAPI.Models.QuestTemplate", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Difficulty")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("QuestTemplates");
+                });
+
+            modelBuilder.Entity("ZeroToHeroAPI.Models.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -254,172 +416,6 @@ namespace ZeroToHeroAPI.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("ZeroToHeroAPI.Models.Quest.DailyQuest", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("DateAssigned")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("DateCompleted")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsCompleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("QuestTemplateId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("QuestTemplateId");
-
-                    b.ToTable("DailyQuests");
-                });
-
-            modelBuilder.Entity("ZeroToHeroAPI.Models.Quest.QuestAction", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("text");
-
-                    b.Property<string>("ActionType")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("QuestTemplateId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("TargetValue")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Unit")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("QuestTemplateId");
-
-                    b.ToTable("QuestActions");
-                });
-
-            modelBuilder.Entity("ZeroToHeroAPI.Models.Quest.QuestActionProgress", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("text");
-
-                    b.Property<string>("DailyQuestId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsActionCompleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<int>("ProgressValue")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("QuestActionId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DailyQuestId");
-
-                    b.HasIndex("QuestActionId");
-
-                    b.ToTable("QuestActionProgresses");
-                });
-
-            modelBuilder.Entity("ZeroToHeroAPI.Models.Quest.QuestPunishment", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("text");
-
-                    b.Property<int>("MaxValue")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("MinValue")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("PunishmentType")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("QuestTemplateId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("QuestTemplateId");
-
-                    b.ToTable("QuestPunishments");
-                });
-
-            modelBuilder.Entity("ZeroToHeroAPI.Models.Quest.QuestReward", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("text");
-
-                    b.Property<int>("MaxValue")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("MinValue")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("QuestTemplateId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("RewardType")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("QuestTemplateId");
-
-                    b.ToTable("QuestRewards");
-                });
-
-            modelBuilder.Entity("ZeroToHeroAPI.Models.Quest.QuestTemplate", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("Difficulty")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("QuestTemplates");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -431,7 +427,7 @@ namespace ZeroToHeroAPI.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("ZeroToHeroAPI.Data.User", null)
+                    b.HasOne("ZeroToHeroAPI.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -440,7 +436,7 @@ namespace ZeroToHeroAPI.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("ZeroToHeroAPI.Data.User", null)
+                    b.HasOne("ZeroToHeroAPI.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -455,7 +451,7 @@ namespace ZeroToHeroAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ZeroToHeroAPI.Data.User", null)
+                    b.HasOne("ZeroToHeroAPI.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -464,27 +460,16 @@ namespace ZeroToHeroAPI.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("ZeroToHeroAPI.Data.User", null)
+                    b.HasOne("ZeroToHeroAPI.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ZeroToHeroAPI.Data.PlayerStat", b =>
+            modelBuilder.Entity("ZeroToHeroAPI.Models.DailyQuest", b =>
                 {
-                    b.HasOne("ZeroToHeroAPI.Data.User", "User")
-                        .WithOne("PlayerStat")
-                        .HasForeignKey("ZeroToHeroAPI.Data.PlayerStat", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("ZeroToHeroAPI.Models.Quest.DailyQuest", b =>
-                {
-                    b.HasOne("ZeroToHeroAPI.Models.Quest.QuestTemplate", "QuestTemplate")
+                    b.HasOne("ZeroToHeroAPI.Models.QuestTemplate", "QuestTemplate")
                         .WithMany()
                         .HasForeignKey("QuestTemplateId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -493,9 +478,20 @@ namespace ZeroToHeroAPI.Migrations
                     b.Navigation("QuestTemplate");
                 });
 
-            modelBuilder.Entity("ZeroToHeroAPI.Models.Quest.QuestAction", b =>
+            modelBuilder.Entity("ZeroToHeroAPI.Models.PlayerStat", b =>
                 {
-                    b.HasOne("ZeroToHeroAPI.Models.Quest.QuestTemplate", "QuestTemplate")
+                    b.HasOne("ZeroToHeroAPI.Models.User", "User")
+                        .WithOne("PlayerStat")
+                        .HasForeignKey("ZeroToHeroAPI.Models.PlayerStat", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ZeroToHeroAPI.Models.QuestAction", b =>
+                {
+                    b.HasOne("ZeroToHeroAPI.Models.QuestTemplate", "QuestTemplate")
                         .WithMany("Actions")
                         .HasForeignKey("QuestTemplateId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -504,15 +500,15 @@ namespace ZeroToHeroAPI.Migrations
                     b.Navigation("QuestTemplate");
                 });
 
-            modelBuilder.Entity("ZeroToHeroAPI.Models.Quest.QuestActionProgress", b =>
+            modelBuilder.Entity("ZeroToHeroAPI.Models.QuestActionProgress", b =>
                 {
-                    b.HasOne("ZeroToHeroAPI.Models.Quest.DailyQuest", "DailyQuest")
+                    b.HasOne("ZeroToHeroAPI.Models.DailyQuest", "DailyQuest")
                         .WithMany("ActionProgresses")
                         .HasForeignKey("DailyQuestId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ZeroToHeroAPI.Models.Quest.QuestAction", "QuestAction")
+                    b.HasOne("ZeroToHeroAPI.Models.QuestAction", "QuestAction")
                         .WithMany()
                         .HasForeignKey("QuestActionId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -523,9 +519,9 @@ namespace ZeroToHeroAPI.Migrations
                     b.Navigation("QuestAction");
                 });
 
-            modelBuilder.Entity("ZeroToHeroAPI.Models.Quest.QuestPunishment", b =>
+            modelBuilder.Entity("ZeroToHeroAPI.Models.QuestPunishment", b =>
                 {
-                    b.HasOne("ZeroToHeroAPI.Models.Quest.QuestTemplate", "QuestTemplate")
+                    b.HasOne("ZeroToHeroAPI.Models.QuestTemplate", "QuestTemplate")
                         .WithMany("Punishments")
                         .HasForeignKey("QuestTemplateId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -534,9 +530,9 @@ namespace ZeroToHeroAPI.Migrations
                     b.Navigation("QuestTemplate");
                 });
 
-            modelBuilder.Entity("ZeroToHeroAPI.Models.Quest.QuestReward", b =>
+            modelBuilder.Entity("ZeroToHeroAPI.Models.QuestReward", b =>
                 {
-                    b.HasOne("ZeroToHeroAPI.Models.Quest.QuestTemplate", "QuestTemplate")
+                    b.HasOne("ZeroToHeroAPI.Models.QuestTemplate", "QuestTemplate")
                         .WithMany("Rewards")
                         .HasForeignKey("QuestTemplateId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -545,24 +541,24 @@ namespace ZeroToHeroAPI.Migrations
                     b.Navigation("QuestTemplate");
                 });
 
-            modelBuilder.Entity("ZeroToHeroAPI.Data.User", b =>
-                {
-                    b.Navigation("PlayerStat")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ZeroToHeroAPI.Models.Quest.DailyQuest", b =>
+            modelBuilder.Entity("ZeroToHeroAPI.Models.DailyQuest", b =>
                 {
                     b.Navigation("ActionProgresses");
                 });
 
-            modelBuilder.Entity("ZeroToHeroAPI.Models.Quest.QuestTemplate", b =>
+            modelBuilder.Entity("ZeroToHeroAPI.Models.QuestTemplate", b =>
                 {
                     b.Navigation("Actions");
 
                     b.Navigation("Punishments");
 
                     b.Navigation("Rewards");
+                });
+
+            modelBuilder.Entity("ZeroToHeroAPI.Models.User", b =>
+                {
+                    b.Navigation("PlayerStat")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

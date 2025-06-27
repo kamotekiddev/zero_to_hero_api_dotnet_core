@@ -1,6 +1,6 @@
 namespace ZeroToHeroAPI.Enums;
 
-public enum QuestDifficulty
+public enum QuestDifficultyEnum
 {
     Easy,
     Medium,

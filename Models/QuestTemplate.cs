@@ -1,7 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using ZeroToHeroAPI.Enums;
 
-namespace ZeroToHeroAPI.Models.Quest;
+namespace ZeroToHeroAPI.Models;
 
 public class QuestTemplate
 {
@@ -11,7 +12,7 @@ public class QuestTemplate
 
     public string Title { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
-    public int Difficulty { get; set; }
+    public QuestDifficultyEnum Difficulty { get; set; }
     public bool IsActive { get; set; } = true;
 
     public List<QuestAction> Actions { get; set; } = new();
