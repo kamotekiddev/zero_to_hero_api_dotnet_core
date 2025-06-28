@@ -12,8 +12,8 @@ using ZeroToHeroAPI.Data;
 namespace ZeroToHeroAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250623081748_initial")]
-    partial class initial
+    [Migration("20250627123524_Add DailyQuest Status field")]
+    partial class AddDailyQuestStatusfield
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -157,7 +157,41 @@ namespace ZeroToHeroAPI.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("ZeroToHeroAPI.Data.PlayerStat", b =>
+            modelBuilder.Entity("ZeroToHeroAPI.Models.DailyQuest", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("DateAssigned")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DateCompleted")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("QuestStatus")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("QuestTemplateId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestTemplateId");
+
+                    b.ToTable("DailyQuests");
+                });
+
+            modelBuilder.Entity("ZeroToHeroAPI.Models.PlayerStat", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
@@ -193,7 +227,133 @@ namespace ZeroToHeroAPI.Migrations
                     b.ToTable("PlayerStats");
                 });
 
-            modelBuilder.Entity("ZeroToHeroAPI.Data.User", b =>
+            modelBuilder.Entity("ZeroToHeroAPI.Models.QuestAction", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("text");
+
+                    b.Property<int>("ActionType")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("QuestTemplateId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("TargetValue")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Unit")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestTemplateId");
+
+                    b.ToTable("QuestActions");
+                });
+
+            modelBuilder.Entity("ZeroToHeroAPI.Models.QuestActionProgress", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("text");
+
+                    b.Property<string>("DailyQuestId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsActionCompleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("ProgressValue")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("QuestActionId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DailyQuestId");
+
+                    b.HasIndex("QuestActionId");
+
+                    b.ToTable("QuestActionProgresses");
+                });
+
+            modelBuilder.Entity("ZeroToHeroAPI.Models.QuestPunishment", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("text");
+
+                    b.Property<int>("PunishmentType")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("QuestTemplateId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Value")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestTemplateId");
+
+                    b.ToTable("QuestPunishments");
+                });
+
+            modelBuilder.Entity("ZeroToHeroAPI.Models.QuestReward", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("text");
+
+                    b.Property<string>("QuestTemplateId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("RewardType")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Value")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestTemplateId");
+
+                    b.ToTable("QuestRewards");
+                });
+
+            modelBuilder.Entity("ZeroToHeroAPI.Models.QuestTemplate", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Difficulty")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("QuestTemplates");
+                });
+
+            modelBuilder.Entity("ZeroToHeroAPI.Models.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -268,7 +428,7 @@ namespace ZeroToHeroAPI.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("ZeroToHeroAPI.Data.User", null)
+                    b.HasOne("ZeroToHeroAPI.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -277,7 +437,7 @@ namespace ZeroToHeroAPI.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("ZeroToHeroAPI.Data.User", null)
+                    b.HasOne("ZeroToHeroAPI.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -292,7 +452,7 @@ namespace ZeroToHeroAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ZeroToHeroAPI.Data.User", null)
+                    b.HasOne("ZeroToHeroAPI.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -301,25 +461,102 @@ namespace ZeroToHeroAPI.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("ZeroToHeroAPI.Data.User", null)
+                    b.HasOne("ZeroToHeroAPI.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ZeroToHeroAPI.Data.PlayerStat", b =>
+            modelBuilder.Entity("ZeroToHeroAPI.Models.DailyQuest", b =>
                 {
-                    b.HasOne("ZeroToHeroAPI.Data.User", "User")
+                    b.HasOne("ZeroToHeroAPI.Models.QuestTemplate", "QuestTemplate")
+                        .WithMany()
+                        .HasForeignKey("QuestTemplateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("QuestTemplate");
+                });
+
+            modelBuilder.Entity("ZeroToHeroAPI.Models.PlayerStat", b =>
+                {
+                    b.HasOne("ZeroToHeroAPI.Models.User", "User")
                         .WithOne("PlayerStat")
-                        .HasForeignKey("ZeroToHeroAPI.Data.PlayerStat", "UserId")
+                        .HasForeignKey("ZeroToHeroAPI.Models.PlayerStat", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ZeroToHeroAPI.Data.User", b =>
+            modelBuilder.Entity("ZeroToHeroAPI.Models.QuestAction", b =>
+                {
+                    b.HasOne("ZeroToHeroAPI.Models.QuestTemplate", "QuestTemplate")
+                        .WithMany("Actions")
+                        .HasForeignKey("QuestTemplateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("QuestTemplate");
+                });
+
+            modelBuilder.Entity("ZeroToHeroAPI.Models.QuestActionProgress", b =>
+                {
+                    b.HasOne("ZeroToHeroAPI.Models.DailyQuest", "DailyQuest")
+                        .WithMany("ActionProgresses")
+                        .HasForeignKey("DailyQuestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ZeroToHeroAPI.Models.QuestAction", "QuestAction")
+                        .WithMany()
+                        .HasForeignKey("QuestActionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DailyQuest");
+
+                    b.Navigation("QuestAction");
+                });
+
+            modelBuilder.Entity("ZeroToHeroAPI.Models.QuestPunishment", b =>
+                {
+                    b.HasOne("ZeroToHeroAPI.Models.QuestTemplate", "QuestTemplate")
+                        .WithMany("Punishments")
+                        .HasForeignKey("QuestTemplateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("QuestTemplate");
+                });
+
+            modelBuilder.Entity("ZeroToHeroAPI.Models.QuestReward", b =>
+                {
+                    b.HasOne("ZeroToHeroAPI.Models.QuestTemplate", "QuestTemplate")
+                        .WithMany("Rewards")
+                        .HasForeignKey("QuestTemplateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("QuestTemplate");
+                });
+
+            modelBuilder.Entity("ZeroToHeroAPI.Models.DailyQuest", b =>
+                {
+                    b.Navigation("ActionProgresses");
+                });
+
+            modelBuilder.Entity("ZeroToHeroAPI.Models.QuestTemplate", b =>
+                {
+                    b.Navigation("Actions");
+
+                    b.Navigation("Punishments");
+
+                    b.Navigation("Rewards");
+                });
+
+            modelBuilder.Entity("ZeroToHeroAPI.Models.User", b =>
                 {
                     b.Navigation("PlayerStat")
                         .IsRequired();

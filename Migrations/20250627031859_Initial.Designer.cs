@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ZeroToHeroAPI.Data;
@@ -11,9 +12,11 @@ using ZeroToHeroAPI.Data;
 namespace ZeroToHeroAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250627031859_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -160,7 +163,7 @@ namespace ZeroToHeroAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("DateAssigned")
+                    b.Property<DateTime>("DateAssigned")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime?>("DateCompleted")
@@ -168,10 +171,6 @@ namespace ZeroToHeroAPI.Migrations
 
                     b.Property<bool>("IsCompleted")
                         .HasColumnType("boolean");
-
-                    b.Property<string>("QuestStatus")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.Property<string>("QuestTemplateId")
                         .IsRequired()
@@ -285,15 +284,18 @@ namespace ZeroToHeroAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("text");
 
+                    b.Property<int>("MaxValue")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("MinValue")
+                        .HasColumnType("integer");
+
                     b.Property<int>("PunishmentType")
                         .HasColumnType("integer");
 
                     b.Property<string>("QuestTemplateId")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<int>("Value")
-                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -308,14 +310,17 @@ namespace ZeroToHeroAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("text");
 
+                    b.Property<int>("MaxValue")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("MinValue")
+                        .HasColumnType("integer");
+
                     b.Property<string>("QuestTemplateId")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int>("RewardType")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Value")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");

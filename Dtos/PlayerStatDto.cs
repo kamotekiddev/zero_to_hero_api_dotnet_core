@@ -1,4 +1,6 @@
-namespace ZeroToHeroAPI.Models.Dtos;
+using System.ComponentModel.DataAnnotations;
+
+namespace ZeroToHeroAPI.Dtos;
 
 public class PlayerStatDto
 {
@@ -8,4 +10,9 @@ public class PlayerStatDto
     public int CurrentExp { get; set; } = 0;
     public int NextLevelExp { get; set; } = 100;
     public string UserId { get; set; }
+}
+
+public class UpdatePlayerStatsDto
+{
+    [Required] public int ExpGained { get; set; }
 }

@@ -1,8 +1,10 @@
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using ZeroToHeroAPI.Data;
+using ZeroToHeroAPI.Exeptions;
 using ZeroToHeroAPI.Filters;
 using ZeroToHeroAPI.Interface;
-using ZeroToHeroAPI.Middleware;
+using ZeroToHeroAPI.Models;
 using ZeroToHeroAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,9 +16,17 @@ builder.Services.AddIdentityApiEndpoints<User>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options => options.Filters.Add<ExceptionFilter>());
+
+
 builder.Services.AddScoped<ValidateDtoFilter>();
+builder.Services.AddScoped<ExceptionFilter>();
 builder.Services.AddScoped<IPlayerStatService, PlayerStatService>();
+builder.Services.AddScoped<IQuestService, QuestService>();
+builder.Services.AddScoped<IQuestActionService, QuestActionService>();
+builder.Services.AddScoped<IQuestRewardService, QuestRewardService>();
+builder.Services.AddScoped<IQuestPunishmentService, QuestPunishmentService>();
+builder.Services.AddScoped<IDailyQuestService, DailyQuestService>();
 
 builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();
@@ -24,7 +34,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
-app.UseMiddleware<GlobaleExceptionsHandler>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

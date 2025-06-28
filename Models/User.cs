@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 
-namespace ZeroToHeroAPI.Data;
+namespace ZeroToHeroAPI.Models;
 
 public class User : IdentityUser
 {
