@@ -9,19 +9,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="18791431-ef93-460b-88b3-37cf183b1a1d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Dtos/DailyQuestDto.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Enums/DailyQuestStatusEnum.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ZeroToHeroAPI/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ZeroToHeroAPI/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dtos/QuestPunishmentDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Dtos/QuestPunishmentDto.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dtos/QuestRewardDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Dtos/QuestRewardDto.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dtos/QuestTemplateDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Dtos/QuestTemplateDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/DailyQuestController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/DailyQuestController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dtos/DailyQuestDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Dtos/DailyQuestDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Interface/IDailyQuestService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Interface/IDailyQuestService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Migrations/ApplicationDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Migrations/ApplicationDbContextModelSnapshot.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/DailyQuest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/DailyQuest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/QuestPunishment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/QuestPunishment.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/QuestReward.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/QuestReward.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/QuestPunishmentService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/QuestPunishmentService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/QuestRewardService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/QuestRewardService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/QuestService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/QuestService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/DailyQuestService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/DailyQuestService.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,6 +43,8 @@
 }</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="mock:///Users/kamote-kid/Documents/projects/zero-to-hero/ZeroToHeroAPI/Dtos/QuestTemplateDto.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/kamote-kid/Documents/projects/zero-to-hero/ZeroToHeroAPI/Migrations/ApplicationDbContextModelSnapshot.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/kamote-kid/Documents/projects/zero-to-hero/ZeroToHeroAPI/Migrations/ApplicationDbContextModelSnapshot.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Users/kamote-kid/Documents/projects/zero-to-hero/ZeroToHeroAPI/Services/QuestService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/14d0d0de22ddbd27c52ef5dede3271652a286199ce326f3c6c38e5cce5acfd/HostEnvironmentEnvExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5b81f535cb12983d46d4027f0bb791ebb5ac31d4b47a166756a7461b76862c/CustomValidationAttribute.cs" root0="FORCE_HIGHLIGHTING" />
@@ -78,34 +75,34 @@
     <option name="openDirectoriesWithSingleClick" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Launch Settings Profile.ZeroToHeroAPI: http.executor": "Run",
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Attach to Process.2865:JetBrains.Roslyn.Worker.executor": "Debug",
-    "HTTP Request.ZeroToHeroAPI | #1.executor": "Run",
-    "HTTP Request.ZeroToHeroAPI | #2.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "feature/quest",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "rider.code.cleanup.on.save": "true",
-    "rider.code.cleanup.on.save.profile": "Built-in: Reformat Code",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Launch Settings Profile.ZeroToHeroAPI: http.executor&quot;: &quot;Run&quot;,
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Attach to Process.2865:JetBrains.Roslyn.Worker.executor&quot;: &quot;Debug&quot;,
+    &quot;HTTP Request.ZeroToHeroAPI | #1.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.ZeroToHeroAPI | #2.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/quest&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;rider.code.cleanup.on.save&quot;: &quot;true&quot;,
+    &quot;rider.code.cleanup.on.save.profile&quot;: &quot;Built-in: Reformat Code&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.ZeroToHeroAPI: http">
     <configuration name="ZeroToHeroAPI | #1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/ZeroToHeroAPI.http" executionIdentifier="#1" runType="Run single request">
       <method v="2" />
@@ -216,7 +213,8 @@
       <workItem from="1750909255790" duration="7116000" />
       <workItem from="1750983182614" duration="613000" />
       <workItem from="1750985517961" duration="8354000" />
-      <workItem from="1750998404077" duration="6374000" />
+      <workItem from="1750998404077" duration="12333000" />
+      <workItem from="1751113423036" duration="1357000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <option name="closed" value="true" />
@@ -362,7 +360,15 @@
       <option name="project" value="LOCAL" />
       <updated>1750999975635</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="feature: add daily quest status">
+      <option name="closed" value="true" />
+      <created>1751027858358</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1751027858358</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -398,7 +404,8 @@
     <MESSAGE value="feature: use exception filter instead of middleware" />
     <MESSAGE value="feature: quest punishment crud operations" />
     <MESSAGE value="feature: add validation and use enums for type actions" />
-    <option name="LAST_COMMIT_MESSAGE" value="feature: add validation and use enums for type actions" />
+    <MESSAGE value="feature: add daily quest status" />
+    <option name="LAST_COMMIT_MESSAGE" value="feature: add daily quest status" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

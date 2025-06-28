@@ -10,7 +10,7 @@ public class DailyQuest
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public string Id { get; set; }
 
-    public DateTime DateAssigned { get; set; }
+    public DateTime? DateAssigned { get; set; } = null;
     public bool IsCompleted { get; set; } = false;
     public DateTime? DateCompleted { get; set; }
     public string QuestStatus { get; set; } = nameof(DailyQuestStatusEnum.Pending);

@@ -4,7 +4,9 @@ namespace ZeroToHeroAPI.Interface;
 
 public interface IDailyQuestService
 {
-    Task<QuestTemplateDto> GetQuestTemplates();
-    Task<QuestTemplateDto> GetQuestTemplateById(string id);
-    Task<QuestTemplateDto> CreateQuestTemplate(QuestTemplateDto questTemplateDto);
+    Task<IEnumerable<DailyQuestDto>> GetAllDailyQuestAsync();
+    Task<DailyQuestDto> GetDailyQuestByIdAsync(string dailyQuestId);
+    Task<DailyQuestDto> CreateDailyQuest(CreateDailyQuestDto dto);
+    Task<DailyQuestDto> UpdateDailyQuestAsync(string dailyQuestId, UpdateDailyQuestDto dto);
+    Task<DailyQuestDto> AssignQuestToUser(string dailyQuestId, AssignDailyQuestDto dto);
 }
