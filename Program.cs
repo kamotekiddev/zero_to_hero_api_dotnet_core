@@ -1,4 +1,3 @@
-using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using ZeroToHeroAPI.Data;
 using ZeroToHeroAPI.Exeptions;
@@ -17,6 +16,16 @@ builder.Services.AddIdentityApiEndpoints<User>()
 
 
 builder.Services.AddControllers(options => options.Filters.Add<ExceptionFilter>());
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:3000")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
 
 
 builder.Services.AddScoped<ValidateDtoFilter>();
