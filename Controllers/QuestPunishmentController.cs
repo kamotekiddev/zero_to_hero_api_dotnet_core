@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ZeroToHeroAPI.Dtos;
 using ZeroToHeroAPI.Filters;
@@ -5,7 +6,8 @@ using ZeroToHeroAPI.Interface;
 
 namespace ZeroToHeroAPI.Controllers
 {
-    [Route("api/quest/punishments")]
+    [Authorize(Roles = "Admin")]
+    [Route("api/admin/quest/punishments")]
     [ApiController]
     public class QuestPunishmentController : ControllerBase
     {

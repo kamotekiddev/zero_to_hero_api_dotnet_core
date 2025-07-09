@@ -6,7 +6,8 @@ using ZeroToHeroAPI.Interface;
 
 namespace ZeroToHeroAPI.Controllers
 {
-    [Route("api/daily-quests")]
+    [Authorize(Roles = "Admin")]
+    [Route("api/admin/quest/daily")]
     [ApiController]
     public class DailyQuestController : ControllerBase
     {

@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ZeroToHeroAPI.Dtos;
 using ZeroToHeroAPI.Filters;
@@ -6,7 +6,8 @@ using ZeroToHeroAPI.Interface;
 
 namespace ZeroToHeroAPI.Controllers
 {
-    [Route("api/quest/actions")]
+    [Authorize(Roles = "Admin")]
+    [Route("api/admin/quest/actions")]
     [ApiController]
     public class QuestActionController : ControllerBase
     {
