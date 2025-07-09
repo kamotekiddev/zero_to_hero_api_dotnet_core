@@ -37,6 +37,7 @@ builder.Services.AddScoped<IQuestActionService, QuestActionService>();
 builder.Services.AddScoped<IQuestRewardService, QuestRewardService>();
 builder.Services.AddScoped<IQuestPunishmentService, QuestPunishmentService>();
 builder.Services.AddScoped<IDailyQuestService, DailyQuestService>();
+builder.Services.AddScoped<IPlayerService, PlayerService>();
 
 builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();
