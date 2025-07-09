@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ZeroToHeroAPI.Data;
@@ -12,75 +13,76 @@ public class PlayerService : IPlayerService
     private readonly ApplicationDbContext _db;
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly UserManager<User> _userManager;
+    private readonly IMapper _mapper;
 
     public PlayerService(ApplicationDbContext db,
-        IHttpContextAccessor httpContextAccessor, UserManager<User> userManager)
+        IHttpContextAccessor httpContextAccessor, UserManager<User> userManager, IMapper mapper)
     {
         _db = db;
         _httpContextAccessor = httpContextAccessor;
         _userManager = userManager;
+        _mapper = mapper;
     }
+
 
     public async Task<DailyQuestDto> GetPlayerQuestAsync()
     {
-        var user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
-        if (user == null) throw new UnauthorizedAccessException("Unauthorized");
+        var user = await GetCurrentUser();
 
-        var dailyQuest = await _db.DailyQuests.Include(dailyQuest => dailyQuest.QuestTemplate)
-            .ThenInclude(questTemplate => questTemplate.Actions).Include(dailyQuest => dailyQuest.QuestTemplate)
-            .ThenInclude(questTemplate => questTemplate.Punishments).Include(dailyQuest => dailyQuest.QuestTemplate)
+        var dailyQuest = await _db.DailyQuests
+            .Include(dailyQuest => dailyQuest.QuestTemplate)
+            .ThenInclude(questTemplate => questTemplate.Actions)
+            .Include(dailyQuest => dailyQuest.QuestTemplate)
+            .ThenInclude(questTemplate => questTemplate.Punishments)
+            .Include(dailyQuest => dailyQuest.QuestTemplate)
             .ThenInclude(questTemplate => questTemplate.Rewards)
+            .Include(questTemplate => questTemplate.ActionProgresses)
             .FirstOrDefaultAsync(d => d.UserId == user.Id);
 
         if (dailyQuest == null) throw new KeyNotFoundException("The current user has no quest assigned");
 
-        var questTemplate = dailyQuest.QuestTemplate;
+        return _mapper.Map<DailyQuestDto>(dailyQuest);
+    }
 
-        var questTemplateActions =
-            questTemplate.Actions.Select(qa => new QuestActionDto
+    public async Task<QuestActionProgressDto> StartActionAsync(string dailyQuestId, string actionId,
+        QuestActionProgressStartDto dto)
+    {
+        var actionProgress = await _db.QuestActionProgresses.Include(q => q.QuestAction).FirstOrDefaultAsync(q =>
+            q.DailyQuestId == dailyQuestId);
+
+        var questAction = actionProgress?.QuestAction;
+
+        if (actionProgress == null)
+        {
+            actionProgress = new QuestActionProgress
             {
-                Id = qa.Id,
-                ActionType = qa.ActionType,
-                QuestTemplateId = qa.QuestTemplateId,
-                TargetValue = qa.TargetValue,
-                Unit = qa.Unit
-            });
+                DailyQuestId = dailyQuestId,
+                QuestActionId = actionId,
+                ProgressValue = dto.ProgressValue
+            };
 
-        var questPunishments = questTemplate.Punishments.Select(qp => new QuestPunishmentDto
+            _db.QuestActionProgresses.Add(actionProgress);
+        }
+
+        else
         {
-            Id = qp.Id,
-            QuestTemplateId = qp.QuestTemplateId,
-            PunishmentTypeEnum = qp.PunishmentType,
-            Value = qp.Value
-        });
+            actionProgress.ProgressValue += dto.ProgressValue;
 
-        var questRewards = questTemplate.Rewards.Select(qr => new QuestRewardDto
-        {
-            Id = qr.Id,
-            QuestTemplateId = qr.QuestTemplateId,
-            Value = qr.Value
-        });
+            if (actionProgress.ProgressValue >= questAction?.TargetValue)
+                actionProgress.IsActionCompleted = true;
+        }
+
+        await _db.SaveChangesAsync();
 
 
-        return new DailyQuestDto
-        {
-            Id = dailyQuest.Id,
-            UserId = dailyQuest.UserId,
-            DateAssigned = dailyQuest.DateAssigned,
-            DateCompleted = dailyQuest.DateCompleted,
-            QuestStatus = dailyQuest.QuestStatus,
-            QuestTemplateId = dailyQuest.QuestTemplateId,
-            QuestTemplate = new QuestTemplateDto
-            {
-                Id = questTemplate.Id,
-                Description = questTemplate.Description,
-                Difficulty = questTemplate.Difficulty,
-                Title = questTemplate.Title,
-                Actions = questTemplateActions,
-                Punishments = questPunishments,
-                Rewards = questRewards,
-            },
-            IsCompleted = dailyQuest.IsCompleted
-        };
+        return _mapper.Map<QuestActionProgressDto>(actionProgress);
+    }
+
+    private async Task<User> GetCurrentUser()
+    {
+        var user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext?.User);
+        if (user == null) throw new UnauthorizedAccessException("Unauthorized");
+
+        return user;
     }
 }

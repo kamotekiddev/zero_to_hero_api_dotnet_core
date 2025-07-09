@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ZeroToHeroAPI.Dtos;
+using ZeroToHeroAPI.Filters;
 using ZeroToHeroAPI.Interface;
 
 namespace ZeroToHeroAPI.Controllers
@@ -17,11 +18,20 @@ namespace ZeroToHeroAPI.Controllers
             _playerService = playerService;
         }
 
-        [HttpGet("daily-quest")]
+        [HttpGet("quest/daily")]
         public async Task<IActionResult> GetUserDailyQuest()
         {
-            var playerQuest = await _playerService.GetPlayerQuestAsync();
-            return Ok(new { message = "Success", data = playerQuest });
+            var entity = await _playerService.GetPlayerQuestAsync();
+            return Ok(new { message = "Success", data = entity });
+        }
+
+        [HttpPut("quest/daily/{dailyQuestId}/action/{actionId}/start")]
+        [ServiceFilter(typeof(ValidateDtoFilter))]
+        public async Task<IActionResult> StartQuestAction([FromRoute] string dailyQuestId, string actionId,
+            [FromBody] QuestActionProgressStartDto dto)
+        {
+            var entity = await _playerService.StartActionAsync(dailyQuestId, actionId, dto);
+            return Ok(new { message = "Success", data = entity });
         }
     }
 }

@@ -9,6 +9,8 @@ using ZeroToHeroAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddAutoMapper(typeof(Program));
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
 
@@ -46,11 +48,11 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-    await AdminSeeder.SeedAdminAsync(services);
-}
+// using (var scope = app.Services.CreateScope())
+// {
+//     var services = scope.ServiceProvider;
+//     await AdminSeeder.SeedAdminAsync(services);
+// }
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
