@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ZeroToHeroAPI.Data;
 using ZeroToHeroAPI.Dtos;
+using ZeroToHeroAPI.Enums;
 using ZeroToHeroAPI.Interface;
 using ZeroToHeroAPI.Models;
 
@@ -47,8 +48,10 @@ public class PlayerService : IPlayerService
     public async Task<QuestActionProgressDto> StartActionAsync(string dailyQuestId, string actionId,
         QuestActionProgressStartDto dto)
     {
-        var actionProgress = await _db.QuestActionProgresses.Include(q => q.QuestAction).FirstOrDefaultAsync(q =>
-            q.DailyQuestId == dailyQuestId);
+        var actionProgress = await _db.QuestActionProgresses
+            .Include(q => q.QuestAction)
+            .FirstOrDefaultAsync(q =>
+                q.DailyQuestId == dailyQuestId);
 
         var questAction = actionProgress?.QuestAction;
 
@@ -73,16 +76,128 @@ public class PlayerService : IPlayerService
         }
 
         await _db.SaveChangesAsync();
-
-
         return _mapper.Map<QuestActionProgressDto>(actionProgress);
     }
 
     private async Task<User> GetCurrentUser()
     {
-        var user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext?.User);
-        if (user == null) throw new UnauthorizedAccessException("Unauthorized");
+        if (_httpContextAccessor.HttpContext?.User == null) throw new UnauthorizedAccessException();
+
+        var user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+        if (user == null) throw new UnauthorizedAccessException();
 
         return user;
     }
+
+    public async Task<PlayerDto> InitializePlayerAsync(string userId)
+    {
+        var user = await _userManager.FindByIdAsync(userId);
+        if (user == null) throw new InvalidOperationException("User not found");
+
+        var existingEntity = await _db.Player.FirstOrDefaultAsync(u => u.UserId == userId);
+        if (existingEntity != null) throw new InvalidOperationException("Player already exists.");
+
+        var entity = new Player()
+        {
+            UserId = userId,
+        };
+
+        _db.Player.Add(entity);
+        await _db.SaveChangesAsync();
+
+        return _mapper.Map<PlayerDto>(entity);
+    }
+
+    public async Task<(PlayerDto player, List<PlayerActionEnum> actions)> UpdatePlayerAsync(
+        string playerId,
+        UpdatePlayerDto dto)
+    {
+        var actionsPerformed = new List<PlayerActionEnum>();
+        var playerHistory = new List<PlayerHistory>();
+
+        var player = await _db.Player.FindAsync(playerId);
+        if (player == null) throw new InvalidOperationException("Player not found");
+
+        await using var transaction = await _db.Database.BeginTransactionAsync();
+
+        try
+        {
+            ApplyExpChange(player, dto.ExpGained, actionsPerformed, playerHistory);
+            ApplyLevelChanges(player, actionsPerformed, playerHistory);
+
+            player.NextLevelExp = GetNextLevelExp(player.CurrentLevel);
+
+            _db.PlayerHistory.AddRange(playerHistory);
+            await _db.SaveChangesAsync();
+            await transaction.CommitAsync();
+
+            return (_mapper.Map<PlayerDto>(player), actionsPerformed);
+        }
+        catch (Exception)
+        {
+            await transaction.RollbackAsync();
+            throw;
+        }
+    }
+
+    private static void ApplyExpChange(Player player, int expChange, List<PlayerActionEnum> actions,
+        List<PlayerHistory> history)
+    {
+        if (expChange == 0) return;
+
+        var originalExp = player.CurrentExp;
+        player.CurrentExp += expChange;
+
+        var action = expChange > 0 ? PlayerActionEnum.ExpGained : PlayerActionEnum.ExpDecreased;
+        actions.Add(action);
+
+        history.Add(new PlayerHistory
+        {
+            PlayerId = player.Id,
+            OldValue = originalExp,
+            NewValue = player.CurrentExp,
+            Action = action,
+            CreatedAt = DateTime.UtcNow
+        });
+    }
+
+    private static void ApplyLevelChanges(Player player, List<PlayerActionEnum> actions,
+        List<PlayerHistory> history)
+    {
+        // Level Up
+        while (player.CurrentExp >= player.NextLevelExp)
+        {
+            var oldLevel = player.CurrentLevel;
+            player.CurrentExp -= GetNextLevelExp(oldLevel);
+            player.CurrentLevel++;
+
+            actions.Add(PlayerActionEnum.LeveledUp);
+            history.Add(CreateLevelHistory(player, oldLevel, player.CurrentLevel, PlayerActionEnum.LeveledUp));
+        }
+
+        // Level Down
+        while (player.CurrentExp < 0 && player.CurrentLevel > 1)
+        {
+            var oldLevel = player.CurrentLevel;
+            player.CurrentLevel--;
+            player.CurrentExp += GetNextLevelExp(player.CurrentLevel);
+
+            actions.Add(PlayerActionEnum.LeveledDown);
+            history.Add(CreateLevelHistory(player, oldLevel, player.CurrentLevel, PlayerActionEnum.LeveledDown));
+        }
+    }
+
+    private static PlayerHistory CreateLevelHistory(Player player, int oldLevel, int newLevel, PlayerActionEnum action)
+    {
+        return new PlayerHistory
+        {
+            PlayerId = player.Id,
+            OldValue = oldLevel,
+            NewValue = newLevel,
+            Action = action,
+            CreatedAt = DateTime.UtcNow
+        };
+    }
+
+    private static int GetNextLevelExp(int level) => 50 * level * level;
 }

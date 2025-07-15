@@ -11,7 +11,8 @@ public class ApplicationDbContext : IdentityDbContext<User>
     {
     }
 
-    public DbSet<PlayerStat> PlayerStats { get; set; }
+    public DbSet<Player> Player { get; set; }
+    public DbSet<PlayerHistory> PlayerHistory { get; set; }
     public DbSet<QuestTemplate> QuestTemplates { get; set; }
     public DbSet<QuestAction> QuestActions { get; set; }
     public DbSet<QuestReward> QuestRewards { get; set; }
@@ -24,14 +25,18 @@ public class ApplicationDbContext : IdentityDbContext<User>
         base.OnModelCreating(builder);
 
         builder.Entity<User>()
-            .HasOne(u => u.PlayerStat)
+            .HasOne(u => u.Player)
             .WithOne(ps => ps.User)
-            .HasForeignKey<PlayerStat>(ps => ps.UserId)
+            .HasForeignKey<Player>(ps => ps.UserId)
             .IsRequired();
 
-        builder.Entity<PlayerStat>()
+        builder.Entity<Player>()
             .Property(ps => ps.Id)
             .ValueGeneratedOnAdd();
+
+        builder.Entity<Player>().HasMany(p => p.History)
+            .WithOne(ph => ph.Player)
+            .HasForeignKey(ph => ph.PlayerId);
 
         builder.Entity<QuestTemplate>()
             .HasMany(q => q.Actions)

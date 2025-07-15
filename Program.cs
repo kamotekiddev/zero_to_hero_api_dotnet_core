@@ -33,7 +33,6 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddScoped<ValidateDtoFilter>();
 builder.Services.AddScoped<ExceptionFilter>();
-builder.Services.AddScoped<IPlayerStatService, PlayerStatService>();
 builder.Services.AddScoped<IQuestService, QuestService>();
 builder.Services.AddScoped<IQuestActionService, QuestActionService>();
 builder.Services.AddScoped<IQuestRewardService, QuestRewardService>();

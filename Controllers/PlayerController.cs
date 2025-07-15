@@ -33,5 +33,25 @@ namespace ZeroToHeroAPI.Controllers
             var entity = await _playerService.StartActionAsync(dailyQuestId, actionId, dto);
             return Ok(new { message = "Success", data = entity });
         }
+
+        [HttpPost("{userId}")]
+        [ServiceFilter(typeof(ValidateDtoFilter))]
+        public async Task<IActionResult> InitializePlayer([FromRoute] string userId)
+        {
+            var res = await _playerService.InitializePlayerAsync(userId);
+            return Created(nameof(InitializePlayer), res);
+        }
+
+        [HttpPost("update/{playerId}")]
+        [ServiceFilter(typeof(ValidateDtoFilter))]
+        public async Task<IActionResult> UpdatePlayer([FromRoute] string playerId,
+            [FromBody] UpdatePlayerDto updatePlayerDto)
+        {
+            var (player, actions) = await _playerService.UpdatePlayerAsync(
+                playerId,
+                new UpdatePlayerDto { ExpGained = updatePlayerDto.ExpGained });
+
+            return Ok(new { Data = player, Actions = actions });
+        }
     }
 }

@@ -8,6 +8,8 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
+        CreateMap<Player, PlayerDto>();
+        CreateMap<PlayerHistory, PlayerHistoryDto>();
         CreateMap<QuestTemplate, QuestTemplateDto>();
         CreateMap<QuestAction, QuestActionDto>();
         CreateMap<QuestReward, QuestRewardDto>();
