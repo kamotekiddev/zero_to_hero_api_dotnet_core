@@ -19,6 +19,7 @@ public class ApplicationDbContext : IdentityDbContext<User>
     public DbSet<DailyQuest> DailyQuests { get; set; }
     public DbSet<QuestActionProgress> QuestActionProgresses { get; set; }
     public DbSet<QuestPunishment> QuestPunishments { get; set; }
+    public DbSet<RefreshToken> RefreshTokens { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -29,6 +30,10 @@ public class ApplicationDbContext : IdentityDbContext<User>
             .WithOne(ps => ps.User)
             .HasForeignKey<Player>(ps => ps.UserId)
             .IsRequired();
+
+        builder.Entity<RefreshToken>().HasIndex(rt => rt.Token).IsUnique();
+        builder.Entity<RefreshToken>().HasOne(rt => rt.User).WithMany().HasForeignKey(rt => rt.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder.Entity<Player>()
             .Property(ps => ps.Id)
