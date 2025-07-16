@@ -9,6 +9,8 @@ using ZeroToHeroAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddAutoMapper(typeof(Program));
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
 
@@ -31,12 +33,12 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddScoped<ValidateDtoFilter>();
 builder.Services.AddScoped<ExceptionFilter>();
-builder.Services.AddScoped<IPlayerStatService, PlayerStatService>();
 builder.Services.AddScoped<IQuestService, QuestService>();
 builder.Services.AddScoped<IQuestActionService, QuestActionService>();
 builder.Services.AddScoped<IQuestRewardService, QuestRewardService>();
 builder.Services.AddScoped<IQuestPunishmentService, QuestPunishmentService>();
 builder.Services.AddScoped<IDailyQuestService, DailyQuestService>();
+builder.Services.AddScoped<IPlayerService, PlayerService>();
 
 builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();
@@ -45,11 +47,11 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-    await AdminSeeder.SeedAdminAsync(services);
-}
+// using (var scope = app.Services.CreateScope())
+// {
+//     var services = scope.ServiceProvider;
+//     await AdminSeeder.SeedAdminAsync(services);
+// }
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

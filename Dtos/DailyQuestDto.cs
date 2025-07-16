@@ -16,6 +16,7 @@ public class DailyQuestDto
     public string QuestTemplateId { get; set; }
 
     public QuestTemplateDto? QuestTemplate { get; set; }
+    public List<QuestActionProgressDto>? QuestActionProgress { get; set; }
 }
 
 public class CreateDailyQuestDto

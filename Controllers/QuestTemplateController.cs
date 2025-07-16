@@ -9,11 +9,11 @@ namespace ZeroToHeroAPI.Controllers
     [Authorize(Roles = "Admin")]
     [Route("api/admin/quests")]
     [ApiController]
-    public class QuestController : ControllerBase
+    public class QuestTemplateController : ControllerBase
     {
         private readonly IQuestService _questService;
 
-        public QuestController(IQuestService questService)
+        public QuestTemplateController(IQuestService questService)
         {
             _questService = questService;
         }
