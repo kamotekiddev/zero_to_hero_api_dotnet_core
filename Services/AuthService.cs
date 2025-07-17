@@ -1,4 +1,3 @@
-using System.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ZeroToHeroAPI.Data;
@@ -10,15 +9,20 @@ namespace ZeroToHeroAPI.Services;
 
 public class AuthService : IAuthService
 {
-    private readonly UserManager<User> _userManager;
     private readonly ApplicationDbContext _db;
+    private readonly UserManager<User> _userManager;
+    private readonly RoleManager<IdentityRole> _roleManager;
     private readonly TokenService _tokenService;
+    private readonly IPlayerService _playerService;
 
-    public AuthService(UserManager<User> userManager, ApplicationDbContext db, TokenService tokenService)
+    public AuthService(UserManager<User> userManager, ApplicationDbContext db, TokenService tokenService,
+        RoleManager<IdentityRole> roleManager, IPlayerService playerService)
     {
-        _userManager = userManager;
         _db = db;
+        _userManager = userManager;
         _tokenService = tokenService;
+        _roleManager = roleManager;
+        _playerService = playerService;
     }
 
     public async Task<(string AccessToken, string RefreshToken)> LoginAsync(LoginDto dto)
@@ -40,6 +44,8 @@ public class AuthService : IAuthService
 
     public async Task<(string AccessToken, string RefreshToken)> RegisterAsync(RegisterDto dto)
     {
+        const string role = "User";
+
         var userExists = await _userManager.FindByEmailAsync(dto.Email);
         if (userExists != null)
             throw new BadHttpRequestException("Email already registered");
@@ -54,20 +60,21 @@ public class AuthService : IAuthService
             };
 
             var result = await _userManager.CreateAsync(user, dto.Password);
+
             if (!result.Succeeded)
                 throw new BadHttpRequestException(
-                    $"Cannot Create User {string.Join("; ", result.Errors.Select(e => e.Description))}");
+                    $"Register Failed {string.Join("; ", result.Errors.Select(e => e.Description))}");
+
+            var roleExists = await _roleManager.RoleExistsAsync(role);
+            if (!roleExists)
+                await _roleManager.CreateAsync(new IdentityRole(role));
+
+            await _userManager.AddToRoleAsync(user, role);
+            await _playerService.InitializePlayerAsync(user.Id);
 
             var accessToken = await _tokenService.GenerateAccessToken(user);
             var refreshToken = _tokenService.GenerateRefreshToken(user.Id);
 
-            var player = new Player
-            {
-                UserId = user.Id
-            };
-
-
-            _db.Player.Add(player);
             _db.RefreshTokens.Add(refreshToken);
             await _db.SaveChangesAsync();
             await transaction.CommitAsync();

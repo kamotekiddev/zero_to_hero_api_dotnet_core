@@ -8,6 +8,7 @@ using ZeroToHeroAPI.Exeptions;
 using ZeroToHeroAPI.Filters;
 using ZeroToHeroAPI.Interface;
 using ZeroToHeroAPI.Models;
+using ZeroToHeroAPI.Seeders;
 using ZeroToHeroAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -75,6 +76,7 @@ var app = builder.Build();
 // {
 //     var services = scope.ServiceProvider;
 //     await AdminSeeder.SeedAdminAsync(services);
+//     await RoleSeeder.SeedRolesAsync(services);
 // }
 
 // Configure the HTTP request pipeline.
@@ -84,10 +86,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseHttpsRedirection();
 app.MapControllers();
-
 app.Run();
