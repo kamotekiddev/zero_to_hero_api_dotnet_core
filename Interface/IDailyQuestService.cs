@@ -1,4 +1,5 @@
 using ZeroToHeroAPI.Dtos;
+using ZeroToHeroAPI.Models;
 
 namespace ZeroToHeroAPI.Interface;
 
@@ -9,4 +10,5 @@ public interface IDailyQuestService
     Task<DailyQuestDto> CreateDailyQuest(CreateDailyQuestDto dto);
     Task<DailyQuestDto> UpdateDailyQuestAsync(string dailyQuestId, UpdateDailyQuestDto dto);
     Task<DailyQuestDto> AssignQuestToUser(string dailyQuestId, AssignDailyQuestDto dto);
+    Task<bool> CreateAndAssignDailyQuestToUsers(List<DailyQuest> dailyQuests);
 }

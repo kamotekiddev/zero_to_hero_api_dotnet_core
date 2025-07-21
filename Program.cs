@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Quartz;
+using ZeroToHeroAPI.BackgroundJobs;
 using ZeroToHeroAPI.Data;
 using ZeroToHeroAPI.Exeptions;
 using ZeroToHeroAPI.Filters;
@@ -30,10 +32,22 @@ builder.Services.AddCors(options =>
         });
 });
 
+builder.Services.AddQuartz(q =>
+{
+    var jobKey = new JobKey(nameof(AutoAssignQuestJob));
+    var triggerKey = new TriggerKey($"{nameof(AutoAssignQuestJob)}Trigger");
+
+    q.AddJob<AutoAssignQuestJob>(options => options.WithIdentity(jobKey));
+    q.AddTrigger(options => options.ForJob(jobKey)
+        .WithIdentity(triggerKey).WithCronSchedule("0 0 0 * * ?"));
+});
+
+builder.Services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
+
 
 builder.Services.AddScoped<ValidateDtoFilter>();
 builder.Services.AddScoped<ExceptionFilter>();
-builder.Services.AddScoped<IQuestService, QuestService>();
+builder.Services.AddScoped<IQuestTemplateService, QuestTemplateService>();
 builder.Services.AddScoped<IQuestActionService, QuestActionService>();
 builder.Services.AddScoped<IQuestRewardService, QuestRewardService>();
 builder.Services.AddScoped<IQuestPunishmentService, QuestPunishmentService>();

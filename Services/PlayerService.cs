@@ -25,6 +25,12 @@ public class PlayerService : IPlayerService
         _mapper = mapper;
     }
 
+    public async Task<List<PlayerDto>> GetAllPlayersAsync()
+    {
+        var players = await _db.Player.ToListAsync();
+        return _mapper.Map<List<PlayerDto>>(players);
+    }
+
 
     public async Task<DailyQuestDto> GetPlayerQuestAsync()
     {

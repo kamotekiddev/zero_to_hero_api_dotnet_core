@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ZeroToHeroAPI.Data;
 using ZeroToHeroAPI.Dtos;
@@ -9,16 +8,16 @@ namespace ZeroToHeroAPI.Services;
 
 public class DailyQuestService : IDailyQuestService
 {
-    private readonly ApplicationDbContext _context;
+    private readonly ApplicationDbContext _db;
 
-    public DailyQuestService(ApplicationDbContext context)
+    public DailyQuestService(ApplicationDbContext db)
     {
-        _context = context;
+        _db = db;
     }
 
     public async Task<IEnumerable<DailyQuestDto>> GetAllDailyQuestAsync()
     {
-        var dailyQuests = await _context.DailyQuests.ToListAsync();
+        var dailyQuests = await _db.DailyQuests.ToListAsync();
         return dailyQuests.Select(q => new DailyQuestDto
         {
             Id = q.Id,
@@ -33,7 +32,7 @@ public class DailyQuestService : IDailyQuestService
 
     public async Task<DailyQuestDto> GetDailyQuestByIdAsync(string id)
     {
-        var entity = await _context.DailyQuests.FindAsync(id);
+        var entity = await _db.DailyQuests.FindAsync(id);
         if (entity == null) throw new KeyNotFoundException("Daily quest does not exist");
 
         return new DailyQuestDto
@@ -55,8 +54,8 @@ public class DailyQuestService : IDailyQuestService
             QuestTemplateId = dto.QuestTemplateId,
         };
 
-        _context.Add(entity);
-        await _context.SaveChangesAsync();
+        _db.Add(entity);
+        await _db.SaveChangesAsync();
 
         return new DailyQuestDto
         {
@@ -72,11 +71,11 @@ public class DailyQuestService : IDailyQuestService
 
     public async Task<DailyQuestDto> UpdateDailyQuestAsync(string dailyQuestId, UpdateDailyQuestDto dto)
     {
-        var entity = await _context.DailyQuests.FindAsync(dailyQuestId);
+        var entity = await _db.DailyQuests.FindAsync(dailyQuestId);
         if (entity == null) throw new KeyNotFoundException("Daily quest does not exist");
 
         entity.QuestTemplateId = dto.QuestTemplateId;
-        await _context.SaveChangesAsync();
+        await _db.SaveChangesAsync();
 
         return new DailyQuestDto
         {
@@ -91,14 +90,13 @@ public class DailyQuestService : IDailyQuestService
 
     public async Task<DailyQuestDto> AssignQuestToUser(string dailyQuestId, AssignDailyQuestDto dto)
     {
-        var entity = await _context.DailyQuests.FindAsync(dailyQuestId);
+        var entity = await _db.DailyQuests.FindAsync(dailyQuestId);
         if (entity == null) throw new KeyNotFoundException("Daily quest does not exist");
 
         entity.UserId = dto.UserId;
         entity.DateAssigned = DateTime.UtcNow;
 
-        _context.Update(entity);
-        await _context.SaveChangesAsync();
+        await _db.SaveChangesAsync();
 
         return new DailyQuestDto
         {
@@ -110,5 +108,25 @@ public class DailyQuestService : IDailyQuestService
             IsCompleted = entity.IsCompleted,
             QuestStatus = entity.QuestStatus,
         };
+    }
+
+    public async Task<bool> CreateAndAssignDailyQuestToUsers(List<DailyQuest> dailyQuests)
+    {
+        await using var transaction = await _db.Database.BeginTransactionAsync();
+        try
+        {
+            _db.DailyQuests.AddRange(dailyQuests);
+            var result = await _db.SaveChangesAsync();
+
+            if (result != dailyQuests.Count) return false;
+
+            await transaction.CommitAsync();
+
+            return true;
+        }
+        catch (Exception e)
+        {
+            throw new BadHttpRequestException(e.Message);
+        }
     }
 }

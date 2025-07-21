@@ -5,6 +5,7 @@ namespace ZeroToHeroAPI.Interface;
 
 public interface IPlayerService
 {
+    Task<List<PlayerDto>> GetAllPlayersAsync();
     Task<DailyQuestDto> GetPlayerQuestAsync();
 
     Task<QuestActionProgressDto>
