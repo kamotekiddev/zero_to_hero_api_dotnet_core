@@ -15,9 +15,10 @@ public class DailyQuest
     public DateTime? DateCompleted { get; set; }
     public string QuestStatus { get; set; } = nameof(DailyQuestStatusEnum.Pending);
 
-    public string UserId { get; set; } = string.Empty;
     public string QuestTemplateId { get; set; }
 
-    public QuestTemplate QuestTemplate { get; set; } = null;
-    public List<QuestActionProgress> ActionProgresses { get; set; } = new();
+    public string PlayerId { get; set; }
+    public Player Player { get; set; }
+    public QuestTemplate QuestTemplate { get; set; }
+    public List<QuestActionProgress> ActionProgresses { get; set; }
 }

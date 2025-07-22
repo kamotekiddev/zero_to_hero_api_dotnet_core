@@ -20,9 +20,9 @@ namespace ZeroToHeroAPI.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult> GetAllDailyQuest()
+        public async Task<ActionResult> GetAllDailyQuest([FromQuery] GetAllDailyQuestQueryParams queryParams)
         {
-            var dailyQuests = await _dailyQuestService.GetAllDailyQuestAsync();
+            var dailyQuests = await _dailyQuestService.GetAllDailyQuestAsync(queryParams);
             return Ok(new { message = "Success", data = dailyQuests });
         }
 

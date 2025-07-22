@@ -47,7 +47,7 @@ public class AutoAssignQuestJob : IJob
                 _ => questTemplateHard?.Id ?? string.Empty
             };
 
-            dailyQuest.UserId = player.UserId;
+            dailyQuest.PlayerId = player.Id;
             dailyQuest.DateAssigned = DateTime.UtcNow;
             playerDailyQuests.Add(dailyQuest);
         }

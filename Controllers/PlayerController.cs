@@ -45,12 +45,9 @@ namespace ZeroToHeroAPI.Controllers
         [HttpPost("update/{playerId}")]
         [ServiceFilter(typeof(ValidateDtoFilter))]
         public async Task<IActionResult> UpdatePlayer([FromRoute] string playerId,
-            [FromBody] UpdatePlayerDto updatePlayerDto)
+            [FromBody] UpdatePlayerDto dto)
         {
-            var (player, actions) = await _playerService.UpdatePlayerAsync(
-                playerId,
-                new UpdatePlayerDto { ExpGained = updatePlayerDto.ExpGained });
-
+            var (player, actions) = await _playerService.UpdatePlayerAsync(playerId, dto.ExpGained);
             return Ok(new { Data = player, Actions = actions });
         }
     }

@@ -44,7 +44,7 @@ public class PlayerService : IPlayerService
             .Include(dailyQuest => dailyQuest.QuestTemplate)
             .ThenInclude(questTemplate => questTemplate.Rewards)
             .Include(questTemplate => questTemplate.ActionProgresses)
-            .FirstOrDefaultAsync(d => d.UserId == user.Id);
+            .FirstOrDefaultAsync(d => d.PlayerId == user.Player.Id);
 
         if (dailyQuest == null) throw new KeyNotFoundException("The current user has no quest assigned");
 
@@ -116,7 +116,7 @@ public class PlayerService : IPlayerService
 
     public async Task<(PlayerDto player, List<PlayerActionEnum> actions)> UpdatePlayerAsync(
         string playerId,
-        UpdatePlayerDto dto)
+        int exp)
     {
         var actionsPerformed = new List<PlayerActionEnum>();
         var playerHistory = new List<PlayerHistory>();
@@ -128,7 +128,7 @@ public class PlayerService : IPlayerService
 
         try
         {
-            ApplyExpChange(player, dto.ExpGained, actionsPerformed, playerHistory);
+            ApplyExpChange(player, exp, actionsPerformed, playerHistory);
             ApplyLevelChanges(player, actionsPerformed, playerHistory);
 
             player.NextLevelExp = GetNextLevelExp(player.CurrentLevel);

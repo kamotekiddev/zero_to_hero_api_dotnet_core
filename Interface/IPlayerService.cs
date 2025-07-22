@@ -15,5 +15,5 @@ public interface IPlayerService
         string userId);
 
     Task<(PlayerDto player, List<PlayerActionEnum> actions)>
-        UpdatePlayerAsync(string playerId, UpdatePlayerDto dto);
+        UpdatePlayerAsync(string playerId, int exp);
 }
