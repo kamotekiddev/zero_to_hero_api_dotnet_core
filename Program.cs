@@ -39,7 +39,18 @@ builder.Services.AddQuartz(q =>
 
     q.AddJob<AutoAssignQuestJob>(options => options.WithIdentity(jobKey));
     q.AddTrigger(options => options.ForJob(jobKey)
-        .WithIdentity(triggerKey).WithCronSchedule("0 0 0 * * ?"));
+        .WithIdentity(triggerKey)
+        .WithCronSchedule("0 0 1 * * ?"));
+
+
+    var failJobKey = new JobKey(nameof(AutoFailQuestJob));
+    var failTriggerKey = new TriggerKey($"{nameof(AutoFailQuestJob)}Trigger");
+
+    q.AddJob<AutoFailQuestJob>(opts => opts.WithIdentity(failJobKey));
+    q.AddTrigger(opts => opts
+        .ForJob(failJobKey)
+        .WithIdentity(failTriggerKey)
+        .WithCronSchedule("0 0 0 * * ?"));
 });
 
 builder.Services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
