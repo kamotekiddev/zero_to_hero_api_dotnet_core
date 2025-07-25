@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ZeroToHeroAPI.Data;
@@ -11,9 +12,11 @@ using ZeroToHeroAPI.Data;
 namespace ZeroToHeroAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250716072438_Add Refresh Tokens")]
+    partial class AddRefreshTokens
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -169,10 +172,6 @@ namespace ZeroToHeroAPI.Migrations
                     b.Property<bool>("IsCompleted")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("PlayerId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("QuestStatus")
                         .IsRequired()
                         .HasColumnType("text");
@@ -181,9 +180,11 @@ namespace ZeroToHeroAPI.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("Id");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.HasIndex("PlayerId");
+                    b.HasKey("Id");
 
                     b.HasIndex("QuestTemplateId");
 
@@ -519,19 +520,11 @@ namespace ZeroToHeroAPI.Migrations
 
             modelBuilder.Entity("ZeroToHeroAPI.Models.DailyQuest", b =>
                 {
-                    b.HasOne("ZeroToHeroAPI.Models.Player", "Player")
-                        .WithMany()
-                        .HasForeignKey("PlayerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("ZeroToHeroAPI.Models.QuestTemplate", "QuestTemplate")
                         .WithMany()
                         .HasForeignKey("QuestTemplateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Player");
 
                     b.Navigation("QuestTemplate");
                 });

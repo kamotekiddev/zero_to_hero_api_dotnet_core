@@ -32,7 +32,8 @@ public class ExceptionFilter : IExceptionFilter
                 errorType = "NotFound";
                 break;
 
-            case ArgumentException or ArgumentNullException or ValidationException or InvalidCastException:
+            case ArgumentException or ArgumentNullException or ValidationException
+                or InvalidCastException or BadHttpRequestException:
                 statusCode = (int)HttpStatusCode.BadRequest;
                 message = exception.Message;
                 errorType = "BadRequest";
