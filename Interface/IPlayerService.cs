@@ -5,6 +5,7 @@ namespace ZeroToHeroAPI.Interface;
 
 public interface IPlayerService
 {
+    Task<List<PlayerDto>> GetAllPlayersAsync();
     Task<DailyQuestDto> GetPlayerQuestAsync();
 
     Task<QuestActionProgressDto>
@@ -14,5 +15,5 @@ public interface IPlayerService
         string userId);
 
     Task<(PlayerDto player, List<PlayerActionEnum> actions)>
-        UpdatePlayerAsync(string playerId, UpdatePlayerDto dto);
+        UpdatePlayerAsync(string playerId, int exp);
 }

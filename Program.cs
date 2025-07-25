@@ -2,13 +2,14 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Quartz;
+using ZeroToHeroAPI.BackgroundJobs;
 using Microsoft.IdentityModel.Tokens;
 using ZeroToHeroAPI.Data;
 using ZeroToHeroAPI.Exeptions;
 using ZeroToHeroAPI.Filters;
 using ZeroToHeroAPI.Interface;
 using ZeroToHeroAPI.Models;
-using ZeroToHeroAPI.Seeders;
 using ZeroToHeroAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,6 +34,29 @@ builder.Services.AddCors(options =>
                 .AllowAnyMethod();
         });
 });
+
+builder.Services.AddQuartz(q =>
+{
+    var jobKey = new JobKey(nameof(AutoAssignQuestJob));
+    var triggerKey = new TriggerKey($"{nameof(AutoAssignQuestJob)}Trigger");
+
+    q.AddJob<AutoAssignQuestJob>(options => options.WithIdentity(jobKey));
+    q.AddTrigger(options => options.ForJob(jobKey)
+        .WithIdentity(triggerKey)
+        .WithCronSchedule("0 0 1 * * ?"));
+
+
+    var failJobKey = new JobKey(nameof(AutoFailQuestJob));
+    var failTriggerKey = new TriggerKey($"{nameof(AutoFailQuestJob)}Trigger");
+
+    q.AddJob<AutoFailQuestJob>(opts => opts.WithIdentity(failJobKey));
+    q.AddTrigger(opts => opts
+        .ForJob(failJobKey)
+        .WithIdentity(failTriggerKey)
+        .WithCronSchedule("0 0 0 * * ?"));
+});
+
+builder.Services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
 
 
 builder.Services.AddAuthentication(options =>
@@ -63,6 +87,7 @@ builder.Services.AddScoped<ValidateDtoFilter>();
 builder.Services.AddScoped<ExceptionFilter>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IQuestService, QuestService>();
+builder.Services.AddScoped<IQuestTemplateService, QuestTemplateService>();
 builder.Services.AddScoped<IQuestActionService, QuestActionService>();
 builder.Services.AddScoped<IQuestRewardService, QuestRewardService>();
 builder.Services.AddScoped<IQuestPunishmentService, QuestPunishmentService>();
@@ -76,7 +101,6 @@ var app = builder.Build();
 // {
 //     var services = scope.ServiceProvider;
 //     await AdminSeeder.SeedAdminAsync(services);
-//     await RoleSeeder.SeedRolesAsync(services);
 // }
 
 // Configure the HTTP request pipeline.
@@ -86,8 +110,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
+app.MapIdentityApi<User>();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseHttpsRedirection();
 app.MapControllers();
+
 app.Run();

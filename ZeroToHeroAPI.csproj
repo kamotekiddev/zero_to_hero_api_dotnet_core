@@ -25,27 +25,29 @@
         </PackageReference>
         <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0" />
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.1" />
+        <PackageReference Include="Quartz" Version="3.14.0" />
+        <PackageReference Include="Quartz.Extensions.Hosting" Version="3.14.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.1" />
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Migrations\" />
+        <Folder Include="Migrations\"/>
     </ItemGroup>
 
     <ItemGroup>
-        <Content Include=".idea\.idea.ZeroToHeroAPI\.idea\AndroidProjectSystem.xml" />
-        <Content Include=".idea\.idea.ZeroToHeroAPI\.idea\aws.xml" />
-        <Content Include=".idea\.idea.ZeroToHeroAPI\.idea\dataSources.local.xml" />
-        <Content Include=".idea\.idea.ZeroToHeroAPI\.idea\dataSources.xml" />
-        <Content Include=".idea\.idea.ZeroToHeroAPI\.idea\dataSources\aca6345b-466d-4e8b-9302-ed7f708bbc52.xml" />
-        <Content Include=".idea\.idea.ZeroToHeroAPI\.idea\dataSources\aca6345b-466d-4e8b-9302-ed7f708bbc52\storage_v2\_src_\database\zero_to_hero.p8z7wg.meta" />
-        <Content Include=".idea\.idea.ZeroToHeroAPI\.idea\dataSources\aca6345b-466d-4e8b-9302-ed7f708bbc52\storage_v2\_src_\database\zero_to_hero.p8z7wg\schema\information_schema.FNRwLQ.meta" />
-        <Content Include=".idea\.idea.ZeroToHeroAPI\.idea\dataSources\aca6345b-466d-4e8b-9302-ed7f708bbc52\storage_v2\_src_\database\zero_to_hero.p8z7wg\schema\pg_catalog.0S1ZNQ.meta" />
-        <Content Include=".idea\.idea.ZeroToHeroAPI\.idea\dataSources\aca6345b-466d-4e8b-9302-ed7f708bbc52\storage_v2\_src_\database\zero_to_hero.p8z7wg\schema\public.abK9xQ.meta" />
-        <Content Include=".idea\.idea.ZeroToHeroAPI\.idea\indexLayout.xml" />
-        <Content Include=".idea\.idea.ZeroToHeroAPI\.idea\projectSettingsUpdater.xml" />
-        <Content Include=".idea\.idea.ZeroToHeroAPI\.idea\vcs.xml" />
-        <Content Include=".idea\.idea.ZeroToHeroAPI\.idea\workspace.xml" />
+        <Content Include=".idea\.idea.ZeroToHeroAPI\.idea\AndroidProjectSystem.xml"/>
+        <Content Include=".idea\.idea.ZeroToHeroAPI\.idea\aws.xml"/>
+        <Content Include=".idea\.idea.ZeroToHeroAPI\.idea\dataSources.local.xml"/>
+        <Content Include=".idea\.idea.ZeroToHeroAPI\.idea\dataSources.xml"/>
+        <Content Include=".idea\.idea.ZeroToHeroAPI\.idea\dataSources\aca6345b-466d-4e8b-9302-ed7f708bbc52.xml"/>
+        <Content Include=".idea\.idea.ZeroToHeroAPI\.idea\dataSources\aca6345b-466d-4e8b-9302-ed7f708bbc52\storage_v2\_src_\database\zero_to_hero.p8z7wg.meta"/>
+        <Content Include=".idea\.idea.ZeroToHeroAPI\.idea\dataSources\aca6345b-466d-4e8b-9302-ed7f708bbc52\storage_v2\_src_\database\zero_to_hero.p8z7wg\schema\information_schema.FNRwLQ.meta"/>
+        <Content Include=".idea\.idea.ZeroToHeroAPI\.idea\dataSources\aca6345b-466d-4e8b-9302-ed7f708bbc52\storage_v2\_src_\database\zero_to_hero.p8z7wg\schema\pg_catalog.0S1ZNQ.meta"/>
+        <Content Include=".idea\.idea.ZeroToHeroAPI\.idea\dataSources\aca6345b-466d-4e8b-9302-ed7f708bbc52\storage_v2\_src_\database\zero_to_hero.p8z7wg\schema\public.abK9xQ.meta"/>
+        <Content Include=".idea\.idea.ZeroToHeroAPI\.idea\indexLayout.xml"/>
+        <Content Include=".idea\.idea.ZeroToHeroAPI\.idea\projectSettingsUpdater.xml"/>
+        <Content Include=".idea\.idea.ZeroToHeroAPI\.idea\vcs.xml"/>
+        <Content Include=".idea\.idea.ZeroToHeroAPI\.idea\workspace.xml"/>
     </ItemGroup>
 
 </Project>

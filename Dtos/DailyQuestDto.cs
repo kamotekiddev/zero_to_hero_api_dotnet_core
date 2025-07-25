@@ -1,5 +1,6 @@
 using Microsoft.Build.Framework;
 using ZeroToHeroAPI.Enums;
+using ZeroToHeroAPI.Models;
 
 namespace ZeroToHeroAPI.Dtos;
 
@@ -12,9 +13,10 @@ public class DailyQuestDto
     public DateTime? DateCompleted { get; set; }
     public string QuestStatus { get; set; } = nameof(DailyQuestStatusEnum.Pending);
 
-    public string UserId { get; set; } = string.Empty;
+    public string PlayerId { get; set; } = string.Empty;
     public string QuestTemplateId { get; set; }
 
+    public Player Player { get; set; }
     public QuestTemplateDto? QuestTemplate { get; set; }
     public List<QuestActionProgressDto>? QuestActionProgress { get; set; }
 }
@@ -31,5 +33,10 @@ public class UpdateDailyQuestDto
 
 public class AssignDailyQuestDto
 {
-    [Required] public string UserId { get; set; } = string.Empty;
+    [Required] public string PlayerId { get; set; } = string.Empty;
+}
+
+public record GetAllDailyQuestQueryParams
+{
+    public bool? IsCompleted { get; set; }
 }
