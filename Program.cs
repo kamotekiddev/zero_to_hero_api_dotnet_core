@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Quartz;
 using ZeroToHeroAPI.BackgroundJobs;
 using Microsoft.IdentityModel.Tokens;
+using Scalar.AspNetCore;
 using ZeroToHeroAPI.Data;
 using ZeroToHeroAPI.Exeptions;
 using ZeroToHeroAPI.Filters;
@@ -81,12 +82,11 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddOpenApi();
 
 builder.Services.AddScoped<ValidateDtoFilter>();
 builder.Services.AddScoped<ExceptionFilter>();
 builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<IQuestService, QuestService>();
 builder.Services.AddScoped<IQuestTemplateService, QuestTemplateService>();
 builder.Services.AddScoped<IQuestActionService, QuestActionService>();
 builder.Services.AddScoped<IQuestRewardService, QuestRewardService>();
@@ -94,6 +94,7 @@ builder.Services.AddScoped<IQuestPunishmentService, QuestPunishmentService>();
 builder.Services.AddScoped<IDailyQuestService, DailyQuestService>();
 builder.Services.AddScoped<IPlayerService, PlayerService>();
 builder.Services.AddScoped<TokenService>();
+
 
 var app = builder.Build();
 
@@ -106,12 +107,11 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.MapOpenApi();
+    app.MapScalarApiReference();
 }
 
 
-app.MapIdentityApi<User>();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseHttpsRedirection();
